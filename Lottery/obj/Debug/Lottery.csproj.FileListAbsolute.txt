@@ -1,0 +1,12 @@
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lotter.Common\bin\Debug\Lottery.dll
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lotter.Common\bin\Debug\Lottery.pdb
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lotter.Common\obj\Debug\Lottery.csprojAssemblyReference.cache
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lotter.Common\obj\Debug\Lottery.csproj.CoreCompileInputs.cache
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lotter.Common\obj\Debug\Lottery.dll
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lotter.Common\obj\Debug\Lottery.pdb
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lottery\bin\Debug\Lottery.dll
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lottery\bin\Debug\Lottery.pdb
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lottery\obj\Debug\Lottery.csprojAssemblyReference.cache
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lottery\obj\Debug\Lottery.csproj.CoreCompileInputs.cache
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lottery\obj\Debug\Lottery.dll
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lottery\obj\Debug\Lottery.pdb

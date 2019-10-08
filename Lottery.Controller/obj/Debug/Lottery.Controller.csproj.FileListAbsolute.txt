@@ -1,0 +1,9 @@
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lottery.Controller\bin\Debug\Lottery.Controller.dll
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lottery.Controller\bin\Debug\Lottery.Controller.pdb
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lottery.Controller\bin\Debug\Lottery.dll
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lottery.Controller\bin\Debug\Lottery.pdb
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lottery.Controller\obj\Debug\Lottery.Controller.csprojAssemblyReference.cache
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lottery.Controller\obj\Debug\Lottery.Controller.csproj.CoreCompileInputs.cache
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lottery.Controller\obj\Debug\Lottery.Controller.csproj.CopyComplete
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lottery.Controller\obj\Debug\Lottery.Controller.dll
+C:\Users\李奕德\Desktop\LotteryCodeFirst\Lottery\Lottery.Controller\obj\Debug\Lottery.Controller.pdb
