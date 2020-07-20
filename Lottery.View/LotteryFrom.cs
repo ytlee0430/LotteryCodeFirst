@@ -30,6 +30,10 @@ namespace Lottery.View
             cbxVariableOne.SelectedIndex = 3;
 
             for (int i = 0; i < 1000; i++)
+                cbxVariableTwo.Items.Add(i);
+            cbxVariableTwo.SelectedIndex = 1;
+
+            for (int i = 0; i < 1000; i++)
                 cbxVariableEndValue.Items.Add(i);
             cbxVariableEndValue.SelectedIndex = 10;
 
@@ -63,7 +67,11 @@ namespace Lottery.View
             if (!int.TryParse(cbxVariableOne.SelectedItem.ToString(), out int variableOne))
                 MessageBox.Show("Type Error!");
 
-            var result = _controller.AnalyzeData(lottoType,analyzeType, variableOne);
+            if (!int.TryParse(cbxVariableTwo.SelectedItem.ToString(), out int variableTwo))
+                MessageBox.Show("Type Error!");
+
+
+            var result = _controller.AnalyzeData(lottoType, analyzeType, variableOne, variableTwo);
 
             tbxResult.Text = result;
         }
@@ -79,13 +87,16 @@ namespace Lottery.View
             if (!int.TryParse(cbxVariableOne.SelectedItem.ToString(), out int variableOne))
                 MessageBox.Show("Type Error!");
 
+            if (!int.TryParse(cbxVariableTwo.SelectedItem.ToString(), out int variableTwo))
+                MessageBox.Show("Type Error!");
+
             if (!int.TryParse(cbxVariableEndValue.SelectedItem.ToString(), out int variableEndValue))
                 MessageBox.Show("Type Error!");
 
             if (!int.TryParse(cbxExpectValueCount.SelectedItem.ToString(), out int expectValueCount))
                 MessageBox.Show("Type Error!");
 
-            var result = _controller.CalculateExpectValue(lottoType, analyzeType, variableOne, expectValueCount, variableEndValue);
+            var result = _controller.CalculateExpectValue(lottoType, analyzeType, variableOne, expectValueCount, variableEndValue,variableTwo);
 
             tbxExpectShoot.Text = result;
         }

@@ -7,6 +7,6 @@ namespace Lottery.Interfaces
 {
     public interface IExpectValueCalculator
     {
-        Tuple<double, double> CalculateExpectValue(List<LotteryRecord> data, IAnalyzer analyzer, int expectValueCount, int variableOne);
+        Tuple<double, double> CalculateExpectValue(List<LotteryRecord> data, IAnalyzer analyzer, int expectValueCount, int variableOne, int variableTwo);
     }
 }

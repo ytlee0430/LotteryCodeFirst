@@ -9,6 +9,6 @@ namespace Lottery.Interfaces.Analyzer
 {
     public interface IAnalyzer
     {
-        List<AnalyzeResult> Analyze(List<LotteryRecord> records, int variableOne);
+        List<AnalyzeResult> Analyze(List<LotteryRecord> records, int variableOne, int variableTwo);
     }
 }

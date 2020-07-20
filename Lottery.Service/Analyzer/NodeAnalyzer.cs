@@ -7,7 +7,7 @@ namespace Lottery.Service.Analyzer
 {
     public class NodeAnalyzer : IAnalyzer
     {
-        public List<AnalyzeResult> Analyze(List<LotteryRecord> records, int variableOne)
+        public List<AnalyzeResult> Analyze(List<LotteryRecord> records, int variableOne, int variableTwo)
         {
             var analyzeNodes= new List<AnalyzeResult>();
 

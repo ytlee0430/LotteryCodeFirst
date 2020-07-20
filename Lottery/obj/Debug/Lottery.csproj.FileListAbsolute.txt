@@ -4,3 +4,8 @@ C:\Users\ext_brucel\Documents\LotteryCodeFirst\Lottery\obj\Debug\Lottery.csprojA
 C:\Users\ext_brucel\Documents\LotteryCodeFirst\Lottery\obj\Debug\Lottery.csproj.CoreCompileInputs.cache
 C:\Users\ext_brucel\Documents\LotteryCodeFirst\Lottery\obj\Debug\Lottery.dll
 C:\Users\ext_brucel\Documents\LotteryCodeFirst\Lottery\obj\Debug\Lottery.pdb
+C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery\bin\Debug\Lottery.dll
+C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery\bin\Debug\Lottery.pdb
+C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery\obj\Debug\Lottery.csprojAssemblyReference.cache
+C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery\obj\Debug\Lottery.dll
+C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery\obj\Debug\Lottery.pdb

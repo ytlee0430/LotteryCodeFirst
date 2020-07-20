@@ -7,7 +7,7 @@ namespace Lottery.Service.Analyzer
 {
     public class DicAnalyzer : IAnalyzer
     {
-        List<AnalyzeResult> IAnalyzer.Analyze(List<LotteryRecord> records, int variableOne)
+        List<AnalyzeResult> IAnalyzer.Analyze(List<LotteryRecord> records, int variableOne, int variableTwo)
         {
             var scoreDic = new Dictionary<int,Dictionary<int,Dictionary<int,int>>>();
             return new List<AnalyzeResult>();

@@ -49,6 +49,12 @@ namespace StartUp
                  {
                      case AnalyzeType.AverageOfRecent:
                          return new AverageAnalyzer();
+                     case AnalyzeType.SpecialNumberRelated:
+                         return new SpecialRelatedAnalyzer();
+                     case AnalyzeType.Random:
+                         return new RandomAnalyzer();
+                     case AnalyzeType.FixedFirstSixth:
+                         return new FixedFirstSixthAnalyzer();
                      default:
                          throw new ArgumentOutOfRangeException(nameof(analyzeType), analyzeType, null);
                  }

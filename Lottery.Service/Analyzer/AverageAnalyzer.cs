@@ -10,7 +10,7 @@ namespace Lottery.Service.Analyzer
 {
     public class AverageAnalyzer : IAnalyzer
     {
-        public List<AnalyzeResult> Analyze(List<LotteryRecord> records, int recentPeriod)
+        public List<AnalyzeResult> Analyze(List<LotteryRecord> records, int recentPeriod, int variableTwo)
         {
             List<AnalyzeResult> result = new List<AnalyzeResult>();
 

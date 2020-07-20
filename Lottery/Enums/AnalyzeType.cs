@@ -8,6 +8,9 @@ namespace Lottery.Enums
 {
     public enum AnalyzeType
     {
-        AverageOfRecent
+        AverageOfRecent,
+        SpecialNumberRelated,
+        Random,
+        FixedFirstSixth,
     }
 }

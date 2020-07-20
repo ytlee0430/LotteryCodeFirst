@@ -48,6 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analyzer\FixedFirstSixthAnalyzer.cs" />
+    <Compile Include="Analyzer\RandomAnalyzer.cs" />
+    <Compile Include="Analyzer\SpecialRelatedAnalyzer.cs" />
     <Compile Include="Analyzer\AverageAnalyzer.cs" />
     <Compile Include="Analyzer\DicAnalyzer.cs" />
     <Compile Include="Analyzer\NodeAnalyzer.cs" />

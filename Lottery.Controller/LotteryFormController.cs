@@ -48,24 +48,24 @@ namespace Lottery.Controller
             _webCralwer.UpdateData();
         }
 
-        public string AnalyzeData(LottoType lottoType, AnalyzeType analyzeType, int variableOne)
+        public string AnalyzeData(LottoType lottoType, AnalyzeType analyzeType, int variableOne, int variableTwo)
         {
             var analyzer = _analyzerResolver(analyzeType);
             var data = _inMemory.GetRecords(lottoType);
-            var results = analyzer.Analyze(data, variableOne);
-            
+            var results = analyzer.Analyze(data, variableOne, variableTwo);
+
             StringBuilder sb = new StringBuilder();
-            foreach (var result in results.Where(r => !r.IsSpecial))
+            foreach (var result in results.Where(r => !r.IsSpecial).Take(10))
                 sb.Append($"{result.Number:D2} : {result.Point} \r\n");
             sb.Append("\r\n Special Number: \r\n");
-            foreach (var result in results.Where(r => r.IsSpecial))
+            foreach (var result in results.Where(r => r.IsSpecial).Take(5))
                 sb.Append($"{result.Number:D2} : {result.Point} \r\n");
 
             return sb.ToString();
         }
 
         public string CalculateExpectValue(LottoType lottoType, AnalyzeType analyzeType, int variableOne,
-            int expectValueCount, int variableEndValue)
+            int expectValueCount, int variableEndValue, int variableTwo)
         {
             var analyzer = _analyzerResolver(analyzeType);
             var data = _inMemory.GetRecords(lottoType);
@@ -75,17 +75,17 @@ namespace Lottery.Controller
             var resultSpecialDic = new SortedDictionary<int, double>();
             for (int i = variableOne; i <= variableEndValue; i++)
             {
-                var result = _expectValueCalculator.CalculateExpectValue(data.ToList(), analyzer, expectValueCount, i);
+                var result = _expectValueCalculator.CalculateExpectValue(data.ToList(), analyzer, expectValueCount, i, variableTwo);
                 resultDic.Add(i, result.Item1);
                 resultSpecialDic.Add(i, result.Item2);
             }
 
-            foreach (var pair in resultDic.OrderByDescending(p => p.Value))
+            foreach (var pair in resultDic.OrderByDescending(p => p.Value).Take(5))
                 sb.Append($"variable:{pair.Key:D3},Expect:{pair.Value:#0.000} \r\n");
 
             sb.Append("\r\n Special Number: \r\n");
 
-            foreach (var pair in resultSpecialDic.OrderByDescending(p => p.Value))
+            foreach (var pair in resultSpecialDic.OrderByDescending(p => p.Value).Take(5))
                 sb.Append($"variable:{pair.Key:D3},Expect:{pair.Value:#0.000} \r\n");
 
             return sb.ToString();
