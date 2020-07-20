@@ -16,6 +16,10 @@ namespace Lottery.Service.AutoMapper
             CreateMap<LotteryRecord, BigLotteryRecord>();
             CreateMap<LotteryRecord, PowerLotteryRecord>();
             CreateMap<LotteryRecord, SimulateLotteryRecord>();
+
+            CreateMap<BigLotteryRecord, LotteryRecord>();
+            CreateMap<PowerLotteryRecord, LotteryRecord>();
+            CreateMap<SimulateLotteryRecord, LotteryRecord>();
         }
     }
 }

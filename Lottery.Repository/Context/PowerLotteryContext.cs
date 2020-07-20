@@ -16,6 +16,8 @@ namespace Lottery.Repository.Context
 
         public DateTime GetMaxDate()
         {
+            if (!_database.Set<PowerLotteryRecord>().Any())
+                return DateTime.MinValue;
             return _database.Set<PowerLotteryRecord>().Max(b => b.Date);
         }
     }

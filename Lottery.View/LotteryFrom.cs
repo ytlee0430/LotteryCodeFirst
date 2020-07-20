@@ -19,12 +19,29 @@ namespace Lottery.View
 
             foreach (LottoType enumType in Enum.GetValues(typeof(LottoType)))
                 cbxLotteryType.Items.Add(enumType);
-            cbxLotteryType.SelectedIndex = 0;
+            cbxLotteryType.SelectedIndex = 1;
+
+            foreach (AnalyzeType analyzeType in Enum.GetValues(typeof(AnalyzeType)))
+                cbxAnalyzeType.Items.Add(analyzeType);
+            cbxAnalyzeType.SelectedIndex = 0;
+
+            for (int i = 0; i < 1000; i++)
+                cbxVariableOne.Items.Add(i);
+            cbxVariableOne.SelectedIndex = 3;
+
+            for (int i = 0; i < 1000; i++)
+                cbxVariableEndValue.Items.Add(i);
+            cbxVariableEndValue.SelectedIndex = 10;
+
+            for (int i = 0; i < 100; i++)
+                cbxExpectValueCount.Items.Add(i);
+            cbxExpectValueCount.SelectedIndex = 10;
         }
 
         private void btnInitialSimulate_Click(object sender, System.EventArgs e)
         {
             _controller.BtnInitialSimulate();
+            MessageBox.Show("Done!");
         }
 
         private void btnUpdateData_Click(object sender, System.EventArgs e)
@@ -32,6 +49,45 @@ namespace Lottery.View
             if (!Enum.TryParse(cbxLotteryType.SelectedItem.ToString(), out LottoType type))
                 MessageBox.Show("Type Error!");
             _controller.UpdateData(type);
+            MessageBox.Show("Done!");
+        }
+
+        private void btnAnalyzeDat_Click(object sender, EventArgs e)
+        {
+            if (!Enum.TryParse(cbxAnalyzeType.SelectedItem.ToString(), out AnalyzeType analyzeType))
+                MessageBox.Show("Type Error!");
+
+            if (!Enum.TryParse(cbxLotteryType.SelectedItem.ToString(), out LottoType lottoType))
+                MessageBox.Show("Type Error!");
+
+            if (!int.TryParse(cbxVariableOne.SelectedItem.ToString(), out int variableOne))
+                MessageBox.Show("Type Error!");
+
+            var result = _controller.AnalyzeData(lottoType,analyzeType, variableOne);
+
+            tbxResult.Text = result;
+        }
+
+        private void btnCalculateExpectValue_Click(object sender, EventArgs e)
+        {
+            if (!Enum.TryParse(cbxAnalyzeType.SelectedItem.ToString(), out AnalyzeType analyzeType))
+                MessageBox.Show("Type Error!");
+
+            if (!Enum.TryParse(cbxLotteryType.SelectedItem.ToString(), out LottoType lottoType))
+                MessageBox.Show("Type Error!");
+
+            if (!int.TryParse(cbxVariableOne.SelectedItem.ToString(), out int variableOne))
+                MessageBox.Show("Type Error!");
+
+            if (!int.TryParse(cbxVariableEndValue.SelectedItem.ToString(), out int variableEndValue))
+                MessageBox.Show("Type Error!");
+
+            if (!int.TryParse(cbxExpectValueCount.SelectedItem.ToString(), out int expectValueCount))
+                MessageBox.Show("Type Error!");
+
+            var result = _controller.CalculateExpectValue(lottoType, analyzeType, variableOne, expectValueCount, variableEndValue);
+
+            tbxExpectShoot.Text = result;
         }
     }
 }

@@ -3,6 +3,7 @@
     public enum LottoType
     {
         BigLotto,
-        PowerLotot,
+        PowerLottery,
+        Simulate
     }
 }

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AutoMapper;
 using Lottery.Entities;
 using Lottery.Enums;
+using Lottery.Interfaces;
 using Lottery.Interfaces.Services;
 using Lottery.Repository.Context;
 using Lottery.Repository.Entities;
@@ -20,6 +22,7 @@ namespace Lottery.Service.Web
         private readonly BigLotteryContext _bigLotteryContext;
         private readonly PowerLotteryContext _powerLotteryContext;
         private readonly IMapper _mapper;
+        private readonly IInMemory _inMemory;
 
         public LottoType LotteryType
         {
@@ -29,11 +32,12 @@ namespace Lottery.Service.Web
 
         public bool Ready => _isLoadFinish;
 
-        public WebCralwer(BigLotteryContext bigLotteryContext, PowerLotteryContext powerLotteryContext, IMapper mapper)
+        public WebCralwer(BigLotteryContext bigLotteryContext, PowerLotteryContext powerLotteryContext, IMapper mapper, IInMemory inMemory)
         {
             _bigLotteryContext = bigLotteryContext;
             _powerLotteryContext = powerLotteryContext;
             _mapper = mapper;
+            _inMemory = inMemory;
         }
 
         public void InitialWeb()
@@ -78,7 +82,7 @@ namespace Lottery.Service.Web
                     lastDate = _bigLotteryContext.GetMaxDate();
                     break;
 
-                case LottoType.PowerLotot:
+                case LottoType.PowerLottery:
                     lastDate = _powerLotteryContext.GetMaxDate();
                     break;
 
@@ -89,14 +93,18 @@ namespace Lottery.Service.Web
             var list = new List<LotteryRecord>();
             var crawlerResultList = crawler();
             AnalyzeData(crawlerResultList, lastDate, list);
+
             switch (_type)
             {
                 case LottoType.BigLotto:
-                    _bigLotteryContext.Add(_mapper.Map<List<BigLotteryRecord>>(list));
+                    var addList = _mapper.Map<List<BigLotteryRecord>>(list);
+                    _bigLotteryContext.Add(addList);
+                    _inMemory.BigLotteryRecords.AddRange(list);
                     break;
 
-                case LottoType.PowerLotot:
+                case LottoType.PowerLottery:
                     _powerLotteryContext.Add(_mapper.Map<List<PowerLotteryRecord>>(list));
+                    _inMemory.PowerLotteryRecords.AddRange(list);
                     break;
 
                 default:
@@ -104,13 +112,27 @@ namespace Lottery.Service.Web
             }
         }
 
+        private void SaveCSVFile(List<LotteryRecord> list)
+        {
+            StreamWriter sw = new StreamWriter($"C:\\Users\\ext_brucel\\Desktop\\loto-{DateTime.Now:yyyyMMMMdd}.csv");
+            sw.WriteLine("date,one,two,three,four,five,six,special");
+            foreach (var record in list)
+            {
+                sw.WriteLine($"{record.Date:yyyy MMMM dd},{record.First},{record.Second},{record.Third},{record.Fourth},{record.Fifth},{record.Sixth},{record.Special}");
+            }
+            sw.Close();
+        }
+
         private List<List<string>> crawler()
         {
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
             doc.Load(webBrowser1.DocumentStream);
 
+            var nodes = doc.DocumentNode
+                .SelectNodes("//table")[1];
+
             return doc.DocumentNode
-                .SelectNodes("//table")[3]
+                .SelectNodes("//table")[1]
                 .Descendants("tr")
                 .Skip(1)
                 .Select(tr => tr.Elements("td").Select(td => td.InnerText.Trim()).ToList()).ToList();
@@ -120,7 +142,8 @@ namespace Lottery.Service.Web
         {
             foreach (var arr in crawlerResultList)
             {
-                if (arr.Count <= 12) continue;
+                if (arr.Count <= 12) 
+                    continue;
                 var date = Convert.ToDateTime(arr[1]);
 
                 if (date.CompareTo(lastDate) <= 0)

@@ -16,6 +16,10 @@ namespace Lottery.Repository.Context
 
         public DateTime GetMaxDate()
         {
+            if (!_database.Set<BigLotteryRecord>().Any())
+            {
+                return DateTime.MinValue;
+            }
             return _database.Set<BigLotteryRecord>().Max(b => b.Date);
         }
     }

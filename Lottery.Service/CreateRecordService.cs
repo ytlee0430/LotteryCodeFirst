@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AutoMapper;
 using Lottery.Entities;
+using Lottery.Interfaces;
 using Lottery.Interfaces.Services;
 using Lottery.Repository.Context;
 using Lottery.Repository.Entities;
@@ -19,7 +20,7 @@ namespace Lottery.Service
             _mapper = mapper;
         }
 
-        public void BtnInitialSimulate()
+        public void InitialSimulate()
         {
             var list = new List<LotteryRecord>();
             for (var i = 0; i < 1000; i++)

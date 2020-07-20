@@ -45,6 +45,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Lottery.Service\Lottery.Service.csproj">
+      <Project>{3747416A-7DEB-46D4-BD4B-F2A8308D0530}</Project>
+      <Name>Lottery.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lottery\Lottery.csproj">
       <Project>{BDE3D9B8-4E08-46BA-BF68-9945370242BA}</Project>
       <Name>Lottery</Name>

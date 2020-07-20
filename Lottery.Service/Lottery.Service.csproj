@@ -48,7 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analyzer\AverageAnalyzer.cs" />
+    <Compile Include="Analyzer\DicAnalyzer.cs" />
+    <Compile Include="Analyzer\NodeAnalyzer.cs" />
+    <Compile Include="Analyzer\StrategyResolver.cs" />
     <Compile Include="CreateRecordService.cs" />
+    <Compile Include="ExpectValueCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\LotteryWebCralwer.cs" />
   </ItemGroup>
@@ -65,5 +70,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

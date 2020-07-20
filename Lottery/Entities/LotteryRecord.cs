@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Lottery.Entities
 {
@@ -22,4 +24,5 @@ namespace Lottery.Entities
 
         public DateTime Date { get; set; }
     }
+
 }

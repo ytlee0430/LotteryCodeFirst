@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lottery.Interfaces.Services
+namespace Lottery.Enums
 {
-    public interface ICreateRecordService
+    public enum AnalyzeType
     {
-        void InitialSimulate();
+        AverageOfRecent
     }
 }

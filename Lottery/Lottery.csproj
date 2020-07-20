@@ -42,9 +42,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cache\InMemory.cs" />
+    <Compile Include="Entities\AnalyzeNode.cs" />
+    <Compile Include="Entities\AnalyzeResult.cs" />
     <Compile Include="Entities\LotteryRecord.cs" />
+    <Compile Include="Enums\AnalyzeType.cs" />
     <Compile Include="Enums\LottoType.cs" />
+    <Compile Include="Interfaces\Analyzer\IAnalyzer.cs" />
     <Compile Include="Interfaces\Controller\ILotteryFormController.cs" />
+    <Compile Include="Interfaces\IExpectValueCalculator.cs" />
+    <Compile Include="Interfaces\IInMemory.cs" />
     <Compile Include="Interfaces\ITableMapper.cs" />
     <Compile Include="Interfaces\Services\ICreateRecordService.cs" />
     <Compile Include="Interfaces\Services\IWebCralwer.cs" />
