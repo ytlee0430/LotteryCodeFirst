@@ -1,4 +1,5 @@
-﻿using Lottery.Enums;
+﻿using System.Threading.Tasks;
+using Lottery.Enums;
 
 namespace Lottery.Interfaces.Controller
 {
@@ -6,8 +7,8 @@ namespace Lottery.Interfaces.Controller
     {
         void BtnInitialSimulate();
         void UpdateData(LottoType type);
-        string AnalyzeData(LottoType lottoType, AnalyzeType analyzeType, int variableOne, int variableTwo);
-        string CalculateExpectValue(LottoType lottoType, AnalyzeType analyzeType, int variableOne, int expectValueCount,
+        Task<string> AnalyzeData(LottoType lottoType, AnalyzeType analyzeType, int variableOne, int variableTwo);
+        Task<string> CalculateExpectValue(LottoType lottoType, AnalyzeType analyzeType, int period, int expectValueCount,
             int variableEndValue, int variableTwo);
     }
 }

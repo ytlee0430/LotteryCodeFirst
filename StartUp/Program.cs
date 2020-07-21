@@ -55,6 +55,10 @@ namespace StartUp
                          return new RandomAnalyzer();
                      case AnalyzeType.FixedFirstSixth:
                          return new FixedFirstSixthAnalyzer();
+                     case AnalyzeType.MarkovChain:
+                         return new MarkovChainAnalyzer();
+                     case AnalyzeType.DTMC:
+                         return new DTMCAnalyzer();
                      default:
                          throw new ArgumentOutOfRangeException(nameof(analyzeType), analyzeType, null);
                  }

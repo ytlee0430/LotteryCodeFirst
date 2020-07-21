@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using Lottery.Entities;
 using Lottery.Interfaces.Analyzer;
 
@@ -7,7 +7,7 @@ namespace Lottery.Service.Analyzer
 {
     public class NodeAnalyzer : IAnalyzer
     {
-        public List<AnalyzeResult> Analyze(List<LotteryRecord> records, int variableOne, int variableTwo)
+        public async Task<List<AnalyzeResult>> Analyze(List<LotteryRecord> records, int period, int variableTwo)
         {
             var analyzeNodes= new List<AnalyzeResult>();
 

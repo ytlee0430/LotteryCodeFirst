@@ -11,7 +11,7 @@ namespace Lottery.Service.Analyzer
     public class RandomAnalyzer : IAnalyzer
     {
         private Random _random = new Random();
-        public List<AnalyzeResult> Analyze(List<LotteryRecord> records, int recentPeriod, int variableTwo)
+        public async Task<List<AnalyzeResult>> Analyze(List<LotteryRecord> records, int period, int variableTwo)
         {
             int maxNum = records.Max(r => r.Sixth);
             List<int> resultNumbers = new List<int>();

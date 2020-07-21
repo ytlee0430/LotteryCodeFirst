@@ -56,7 +56,7 @@ namespace Lottery.View
             MessageBox.Show("Done!");
         }
 
-        private void btnAnalyzeDat_Click(object sender, EventArgs e)
+        private async void btnAnalyzeDat_Click(object sender, EventArgs e)
         {
             if (!Enum.TryParse(cbxAnalyzeType.SelectedItem.ToString(), out AnalyzeType analyzeType))
                 MessageBox.Show("Type Error!");
@@ -71,12 +71,12 @@ namespace Lottery.View
                 MessageBox.Show("Type Error!");
 
 
-            var result = _controller.AnalyzeData(lottoType, analyzeType, variableOne, variableTwo);
+            var result = await _controller.AnalyzeData(lottoType, analyzeType, variableOne, variableTwo);
 
             tbxResult.Text = result;
         }
 
-        private void btnCalculateExpectValue_Click(object sender, EventArgs e)
+        private async void btnCalculateExpectValue_Click(object sender, EventArgs e)
         {
             if (!Enum.TryParse(cbxAnalyzeType.SelectedItem.ToString(), out AnalyzeType analyzeType))
                 MessageBox.Show("Type Error!");
@@ -96,7 +96,7 @@ namespace Lottery.View
             if (!int.TryParse(cbxExpectValueCount.SelectedItem.ToString(), out int expectValueCount))
                 MessageBox.Show("Type Error!");
 
-            var result = _controller.CalculateExpectValue(lottoType, analyzeType, variableOne, expectValueCount, variableEndValue,variableTwo);
+            var result = await _controller.CalculateExpectValue(lottoType, analyzeType, variableOne, expectValueCount, variableEndValue, variableTwo);
 
             tbxExpectShoot.Text = result;
         }

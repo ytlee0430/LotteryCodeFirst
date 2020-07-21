@@ -10,7 +10,7 @@ namespace Lottery.Service.Analyzer
 {
     public class SpecialRelatedAnalyzer : IAnalyzer
     {
-        public List<AnalyzeResult> Analyze(List<LotteryRecord> records, int period, int specialNumber)
+        public async Task<List<AnalyzeResult>> Analyze(List<LotteryRecord> records, int period, int specialNumber)
         {
             records = records.Where(r => r.Special == specialNumber).OrderByDescending(r => r.ID).Take(period).ToList();
 

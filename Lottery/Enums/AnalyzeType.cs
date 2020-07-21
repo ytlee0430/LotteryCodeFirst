@@ -12,5 +12,7 @@ namespace Lottery.Enums
         SpecialNumberRelated,
         Random,
         FixedFirstSixth,
+        MarkovChain,
+        DTMC,
     }
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,11 +46,11 @@ namespace Lottery.Controller
             _webCralwer.UpdateData();
         }
 
-        public string AnalyzeData(LottoType lottoType, AnalyzeType analyzeType, int variableOne, int variableTwo)
+        public async Task<string> AnalyzeData(LottoType lottoType, AnalyzeType analyzeType, int variableOne, int variableTwo)
         {
             var analyzer = _analyzerResolver(analyzeType);
             var data = _inMemory.GetRecords(lottoType);
-            var results = analyzer.Analyze(data, variableOne, variableTwo);
+            var results = await analyzer.Analyze(data, variableOne, variableTwo);
 
             StringBuilder sb = new StringBuilder();
             foreach (var result in results.Where(r => !r.IsSpecial).Take(10))
@@ -64,20 +62,20 @@ namespace Lottery.Controller
             return sb.ToString();
         }
 
-        public string CalculateExpectValue(LottoType lottoType, AnalyzeType analyzeType, int variableOne,
+        public async Task<string> CalculateExpectValue(LottoType lottoType, AnalyzeType analyzeType, int period,
             int expectValueCount, int variableEndValue, int variableTwo)
         {
             var analyzer = _analyzerResolver(analyzeType);
             var data = _inMemory.GetRecords(lottoType);
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             var resultDic = new SortedDictionary<int, double>();
             var resultSpecialDic = new SortedDictionary<int, double>();
-            for (int i = variableOne; i <= variableEndValue; i++)
+            for (var currentPeriod = period; currentPeriod <= variableEndValue; currentPeriod++)
             {
-                var result = _expectValueCalculator.CalculateExpectValue(data.ToList(), analyzer, expectValueCount, i, variableTwo);
-                resultDic.Add(i, result.Item1);
-                resultSpecialDic.Add(i, result.Item2);
+                var result = await _expectValueCalculator.CalculateExpectValue(data.ToList(), analyzer, expectValueCount, currentPeriod, variableTwo);
+                resultDic.Add(currentPeriod, result.Item1);
+                resultSpecialDic.Add(currentPeriod, result.Item2);
             }
 
             foreach (var pair in resultDic.OrderByDescending(p => p.Value).Take(5))

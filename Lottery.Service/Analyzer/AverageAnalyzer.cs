@@ -10,14 +10,14 @@ namespace Lottery.Service.Analyzer
 {
     public class AverageAnalyzer : IAnalyzer
     {
-        public List<AnalyzeResult> Analyze(List<LotteryRecord> records, int recentPeriod, int variableTwo)
+        public async Task<List<AnalyzeResult>> Analyze(List<LotteryRecord> records, int period, int variableTwo)
         {
             List<AnalyzeResult> result = new List<AnalyzeResult>();
 
             var maxPeriod = records.Count;
             double first = 0.0, second = 0.0, third = 0.0, fourth = 0.0, fifth = 0.0, sixth = 0.0, special = 0.0;
 
-            for (var i = maxPeriod - recentPeriod; i < maxPeriod; i++)
+            for (var i = maxPeriod - period; i < maxPeriod; i++)
             {
                 first += records[i].First;
                 second += records[i].Second;
@@ -28,13 +28,13 @@ namespace Lottery.Service.Analyzer
                 special += records[i].Special;
             }
 
-            first /= (double)recentPeriod;
-            second /= (double)recentPeriod;
-            third /= (double)recentPeriod;
-            fourth /= (double)recentPeriod;
-            fifth /= (double)recentPeriod;
-            sixth /= (double)recentPeriod;
-            special /= (double)recentPeriod;
+            first /= (double)period;
+            second /= (double)period;
+            third /= (double)period;
+            fourth /= (double)period;
+            fifth /= (double)period;
+            sixth /= (double)period;
+            special /= (double)period;
 
             for (int i = 1; i <= (int)Math.Max(sixth, special) + 1; i++)
             {

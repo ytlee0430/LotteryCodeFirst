@@ -41,7 +41,7 @@ namespace Lottery.Service.Analyzer
                 Number = 1,Point = 100,IsSpecial = true
             }
         };
-        public List<AnalyzeResult> Analyze(List<LotteryRecord> records, int recentPeriod, int variableTwo)
+        public async Task<List<AnalyzeResult>> Analyze(List<LotteryRecord> records, int period, int variableTwo)
         {
             return Result;
         }
