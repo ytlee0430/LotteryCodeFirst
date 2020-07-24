@@ -33,6 +33,7 @@
             this.cbxLotteryType = new System.Windows.Forms.ComboBox();
             this.btnAnalyzeDat = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
@@ -49,7 +50,6 @@
             this.btnCalculateExpectValue = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.cbxExpectValueCount = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -110,6 +110,15 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(196, 307);
             this.panel1.TabIndex = 4;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(8, 171);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(173, 20);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "Simulate Answer:43-49";
             // 
             // label1
             // 
@@ -177,11 +186,11 @@
             this.tbxResult.AcceptsReturn = true;
             this.tbxResult.AcceptsTab = true;
             this.tbxResult.AllowDrop = true;
-            this.tbxResult.Location = new System.Drawing.Point(200, 32);
+            this.tbxResult.Location = new System.Drawing.Point(206, 16);
             this.tbxResult.Multiline = true;
             this.tbxResult.Name = "tbxResult";
             this.tbxResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbxResult.Size = new System.Drawing.Size(307, 247);
+            this.tbxResult.Size = new System.Drawing.Size(307, 274);
             this.tbxResult.TabIndex = 5;
             // 
             // cbxVariableOne
@@ -239,11 +248,11 @@
             this.tbxExpectShoot.AcceptsReturn = true;
             this.tbxExpectShoot.AcceptsTab = true;
             this.tbxExpectShoot.AllowDrop = true;
-            this.tbxExpectShoot.Location = new System.Drawing.Point(202, 32);
+            this.tbxExpectShoot.Location = new System.Drawing.Point(211, 16);
             this.tbxExpectShoot.Multiline = true;
             this.tbxExpectShoot.Name = "tbxExpectShoot";
             this.tbxExpectShoot.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbxExpectShoot.Size = new System.Drawing.Size(307, 247);
+            this.tbxExpectShoot.Size = new System.Drawing.Size(307, 274);
             this.tbxExpectShoot.TabIndex = 10;
             // 
             // btnCalculateExpectValue
@@ -260,7 +269,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(20, 8);
+            this.label4.Location = new System.Drawing.Point(11, 14);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(201, 20);
             this.label4.TabIndex = 11;
@@ -275,20 +284,11 @@
             this.cbxExpectValueCount.Size = new System.Drawing.Size(150, 28);
             this.cbxExpectValueCount.TabIndex = 10;
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(8, 171);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(173, 20);
-            this.label7.TabIndex = 8;
-            this.label7.Text = "Simulate Answer:43-49";
-            // 
             // LotteryFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1388, 343);
+            this.ClientSize = new System.Drawing.Size(1388, 351);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);

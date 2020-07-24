@@ -12,7 +12,14 @@ namespace Lottery.Service.Analyzer
     {
         public async Task<List<AnalyzeResult>> Analyze(List<LotteryRecord> records, int period, int variableTwo)
         {
-            List<AnalyzeResult> result = new List<AnalyzeResult>();
+            var result = new List<AnalyzeResult>();
+            records = records.OrderByDescending(r => r.ID).Take(period).OrderBy(o => o.ID).ToList();
+            var maxNumber = records.Max(r => r.Sixth);
+            
+            
+
+
+            
             return result.OrderByDescending(r => r.Point).ThenBy(r => r.Number).ToList();
         }
     }

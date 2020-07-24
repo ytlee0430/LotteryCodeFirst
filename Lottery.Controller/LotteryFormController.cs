@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,16 +37,11 @@ namespace Lottery.Controller
             _createRecordService.InitialSimulate();
         }
 
-        public async void UpdateData(LottoType type)
+        public void UpdateData(LottoType type, Action callback)
         {
             _webCralwer.LotteryType = type;
-            _webCralwer.InitialWeb();
-            await new Task(() =>
-            {
-                while (!_webCralwer.Ready)
-                    Thread.Sleep(10);
-            });
-            _webCralwer.UpdateData();
+            _webCralwer.SetCallbackFunction(callback);
+            _webCralwer.InitialWebAndUpdate();
         }
 
         public async Task<string> AnalyzeData(LottoType lottoType, AnalyzeType analyzeType, int variableOne, int variableTwo)
@@ -68,16 +66,23 @@ namespace Lottery.Controller
             var analyzer = _analyzerResolver(analyzeType);
             var data = _inMemory.GetRecords(lottoType);
 
+            var sw = new Stopwatch();
+            sw.Start();
+
             var sb = new StringBuilder();
             var resultDic = new SortedDictionary<int, double>();
             var resultSpecialDic = new SortedDictionary<int, double>();
+            var indexes = new List<int>();
             for (var currentPeriod = period; currentPeriod <= variableEndValue; currentPeriod++)
-            {
-                var result = await _expectValueCalculator.CalculateExpectValue(data.ToList(), analyzer, expectValueCount, currentPeriod, variableTwo);
-                resultDic.Add(currentPeriod, result.Item1);
-                resultSpecialDic.Add(currentPeriod, result.Item2);
-            }
+                indexes.Add(currentPeriod);
 
+            await Task.WhenAll(indexes.Select(currentPeriod =>
+                _expectValueCalculator.CalculateExpectValue(data.ToList(), analyzer, expectValueCount,
+                    currentPeriod, variableTwo, resultDic, resultSpecialDic)
+            ));
+         
+            sw.Stop();
+            sb.Append($"Cost Time:{sw.ElapsedMilliseconds} ms \r\n");
             foreach (var pair in resultDic.OrderByDescending(p => p.Value).Take(5))
                 sb.Append($"variable:{pair.Key:D3},Expect:{pair.Value:#0.000} \r\n");
 

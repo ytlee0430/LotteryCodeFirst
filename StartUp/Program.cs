@@ -41,7 +41,6 @@ namespace StartUp
             services.AddScoped<ICreateRecordService, CreateRecordService>();
             services.AddScoped<ILotteryForm, LotteryFrom>();
             services.AddScoped<ILotteryFormController, LotteryFormController>();
-            services.AddScoped<IAnalyzer, AverageAnalyzer>();
             services.AddScoped<IExpectValueCalculator, ExpectValueCalculator>();
             services.AddScoped<AnalyzerResolver>(resolver => analyzeType =>
              {
@@ -64,8 +63,6 @@ namespace StartUp
                  }
              });
 
-
-
             services.AddScoped<BigLotteryContext>();
             services.AddScoped<PowerLotteryContext>();
             services.AddScoped<SimulateLotteryContext>();
@@ -76,10 +73,12 @@ namespace StartUp
             var mapper = new Mapper(configuration);
             services.AddSingleton<IMapper>(mapper);
 
-            var inMemory = new InMemory();
-            inMemory.BigLotteryRecords = mapper.Map<List<LotteryRecord>>(new BigLotteryContext().GetAll().ToList());
-            inMemory.PowerLotteryRecords = mapper.Map<List<LotteryRecord>>(new PowerLotteryContext().GetAll().ToList());
-            inMemory.SimulateLotteryRecords = mapper.Map<List<LotteryRecord>>(new SimulateLotteryContext().GetAll().ToList());
+            var inMemory = new InMemory
+            {
+                BigLotteryRecords = mapper.Map<List<LotteryRecord>>(new BigLotteryContext().GetAll().ToList()),
+                PowerLotteryRecords = mapper.Map<List<LotteryRecord>>(new PowerLotteryContext().GetAll().ToList()),
+                SimulateLotteryRecords = mapper.Map<List<LotteryRecord>>(new SimulateLotteryContext().GetAll().ToList())
+            };
             services.AddSingleton<IInMemory>(inMemory);
 
             ServiceProvider = services.BuildServiceProvider();

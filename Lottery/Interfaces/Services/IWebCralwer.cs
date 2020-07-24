@@ -12,9 +12,9 @@ namespace Lottery.Interfaces.Services
     {
         LottoType LotteryType { get; set; }
         bool Ready { get; }
-
         void UpdateData();
-
-        void InitialWeb();
+        void InitialWebAndUpdate();
+        Task<bool> IsLoadFinish();
+        void SetCallbackFunction(Action callback);
     }
 }

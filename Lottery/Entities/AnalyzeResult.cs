@@ -27,7 +27,7 @@ namespace Lottery.Entities
         public bool IsShootSpecial(LotteryRecord record)
         {
             if (IsSpecial)
-                return record.Second == Number;
+                return record.Special == Number;
             return false;
         }
     }

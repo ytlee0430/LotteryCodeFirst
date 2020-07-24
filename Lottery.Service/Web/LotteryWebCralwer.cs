@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AutoMapper;
@@ -23,6 +25,7 @@ namespace Lottery.Service.Web
         private readonly PowerLotteryContext _powerLotteryContext;
         private readonly IMapper _mapper;
         private readonly IInMemory _inMemory;
+        private Action _callback;
 
         public LottoType LotteryType
         {
@@ -40,7 +43,7 @@ namespace Lottery.Service.Web
             _inMemory = inMemory;
         }
 
-        public void InitialWeb()
+        public void InitialWebAndUpdate()
         {
             _isLoadFinish = false;
             webBrowser1.ScriptErrorsSuppressed = true;
@@ -51,6 +54,28 @@ namespace Lottery.Service.Web
 
             Uri uri = new Uri(uriStr);
             webBrowser1.Navigate(uri);
+        }
+
+        public Task<bool> IsLoadFinish()
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            return new Task<bool>(() =>
+            {
+                while (!this._isLoadFinish)
+                {
+                    if (sw.ElapsedMilliseconds > 10000)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            });
+        }
+
+        public void SetCallbackFunction(Action callback)
+        {
+            _callback = callback;
         }
 
         private void WebBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
@@ -65,6 +90,8 @@ namespace Lottery.Service.Web
         {
             webBrowser1.DocumentCompleted -= WebBrowser1_OnSearchCompleted;
             _isLoadFinish = true;
+            UpdateData();
+            _callback();
         }
 
         public void UpdateData()
@@ -142,7 +169,7 @@ namespace Lottery.Service.Web
         {
             foreach (var arr in crawlerResultList)
             {
-                if (arr.Count <= 12) 
+                if (arr.Count <= 12)
                     continue;
                 var date = Convert.ToDateTime(arr[1]);
 

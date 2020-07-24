@@ -48,12 +48,11 @@ namespace Lottery.View
             MessageBox.Show("Done!");
         }
 
-        private void btnUpdateData_Click(object sender, System.EventArgs e)
+        private async void btnUpdateData_Click(object sender, System.EventArgs e)
         {
             if (!Enum.TryParse(cbxLotteryType.SelectedItem.ToString(), out LottoType type))
                 MessageBox.Show("Type Error!");
-            _controller.UpdateData(type);
-            MessageBox.Show("Done!");
+            _controller.UpdateData(type, () => { MessageBox.Show("Done!"); });
         }
 
         private async void btnAnalyzeDat_Click(object sender, EventArgs e)

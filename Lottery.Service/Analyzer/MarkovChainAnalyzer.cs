@@ -16,111 +16,121 @@ namespace Lottery.Service.Analyzer
             var result = new List<AnalyzeResult>();
             records = records.OrderByDescending(r => r.ID).Take(period).OrderBy(o => o.ID).ToList();
             var maxNumber = records.Max(r => r.Sixth);
-            var transposeArray = new Dictionary<int, Dictionary<int, int>>();
-            result = await AnalyzeNormal(records, period, maxNumber, transposeArray);
+            var stochasticMatrix = new Dictionary<int, Dictionary<int, int>>();
 
-            maxNumber = records.Max(r => r.Special);
-            transposeArray = new Dictionary<int, Dictionary<int, int>>();
-            await InitialTransposeArray(transposeArray, maxNumber);
-            for (int i = 0; i < period - 1; i++)
-                SetupSpecialTransposeArray(records, i, transposeArray);
-            var currentSpecial = records.Last().Special;
-            result.AddRange(transposeArray[currentSpecial].Select(p => new AnalyzeResult { IsSpecial = true, Number = p.Key, Point = p.Value }));
+            var maxNumberSp = records.Max(r => r.Special);
+            var stochasticMatrixSp = new Dictionary<int, Dictionary<int, int>>();
 
+            var tasks = new List<Task>
+            {
+                AnalyzeNormal(records, period, maxNumber, stochasticMatrix, result),
+                AnalyzSpecial(records, period, maxNumberSp, stochasticMatrixSp, result)
+            };
+            await Task.WhenAll(tasks);
             return result.OrderByDescending(r => r.Point).ThenBy(r => r.Number).ToList();
         }
 
-        private async Task InitialTransposeArray(Dictionary<int, Dictionary<int, int>> transposeArray, int maxNumber)
+        protected async Task InitialStochasticMatrix(Dictionary<int, Dictionary<int, int>> stochasticMatrix, int maxNumber)
         {
             for (int number = 1; number <= maxNumber; number++)
             {
                 var insertDic = new Dictionary<int, int>();
                 for (int innerNumber = 1; innerNumber <= maxNumber; innerNumber++)
                     insertDic[innerNumber] = 0;
-                transposeArray[number] = insertDic;
+                stochasticMatrix[number] = insertDic;
             }
         }
 
-        private async Task<List<AnalyzeResult>> AnalyzeNormal(List<LotteryRecord> records, int period, int maxNumber, Dictionary<int, Dictionary<int, int>> transposeArray)
+        protected async Task AnalyzSpecial(List<LotteryRecord> records, int period, int maxNumber,
+            Dictionary<int, Dictionary<int, int>> stochasticMatrix, List<AnalyzeResult> results)
         {
-            await InitialTransposeArray(transposeArray, maxNumber);
+            await InitialStochasticMatrix(stochasticMatrix, maxNumber);
+            for (int i = 0; i < period - 1; i++)
+                SetupSpecialTStochasticMatrix(records, i, stochasticMatrix);
+            var currentSpecial = records.Last().Special;
+            results.AddRange(stochasticMatrix[currentSpecial].Select(p => new AnalyzeResult { IsSpecial = true, Number = p.Key, Point = p.Value }));
+        }
+
+        protected async Task AnalyzeNormal(List<LotteryRecord> records, int period, int maxNumber, Dictionary<int, Dictionary<int, int>> stochasticMatrix, List<AnalyzeResult> results)
+        {
+            await InitialStochasticMatrix(stochasticMatrix, maxNumber);
 
             for (int i = 0; i < period - 1; i++)
-                await SetupNormalTransposeArray(records, i, transposeArray);
+                await SetupNormalStochasticMatrix(records, i, stochasticMatrix);
 
             var currentPeriod = records.Last();
 
-            var scoreDic = transposeArray[currentPeriod.First].ToDictionary(p => p.Key, p => p.Value);
-            foreach (var pair in transposeArray[currentPeriod.Second])
+            var scoreDic = stochasticMatrix[currentPeriod.First].ToDictionary(p => p.Key, p => p.Value);
+            foreach (var pair in stochasticMatrix[currentPeriod.Second])
                 scoreDic[pair.Key] += pair.Value;
-            foreach (var pair in transposeArray[currentPeriod.Third])
+            foreach (var pair in stochasticMatrix[currentPeriod.Third])
                 scoreDic[pair.Key] += pair.Value;
-            foreach (var pair in transposeArray[currentPeriod.Fourth])
+            foreach (var pair in stochasticMatrix[currentPeriod.Fourth])
                 scoreDic[pair.Key] += pair.Value;
-            foreach (var pair in transposeArray[currentPeriod.Fifth])
+            foreach (var pair in stochasticMatrix[currentPeriod.Fifth])
                 scoreDic[pair.Key] += pair.Value;
-            foreach (var pair in transposeArray[currentPeriod.Sixth])
+            foreach (var pair in stochasticMatrix[currentPeriod.Sixth])
                 scoreDic[pair.Key] += pair.Value;
 
-            return scoreDic.OrderByDescending(p => p.Value).Select(p => new AnalyzeResult
+            results.AddRange(scoreDic.OrderByDescending(p => p.Value).Select(p => new AnalyzeResult
             {
                 Number = p.Key,
                 Point = p.Value
-            }).ToList();
+            }));
         }
 
-        private async Task SetupNormalTransposeArray(List<LotteryRecord> records, int index, Dictionary<int, Dictionary<int, int>> transposeArray)
+        protected async Task SetupNormalStochasticMatrix(List<LotteryRecord> records, int index, Dictionary<int, Dictionary<int, int>> stochasticMatrix)
         {
             var priorPeriod = records[index];
             var currentPeriod = records[index + 1];
-            transposeArray[priorPeriod.First][currentPeriod.First]++;
-            transposeArray[priorPeriod.First][currentPeriod.Second]++;
-            transposeArray[priorPeriod.First][currentPeriod.Third]++;
-            transposeArray[priorPeriod.First][currentPeriod.Fourth]++;
-            transposeArray[priorPeriod.First][currentPeriod.Fifth]++;
-            transposeArray[priorPeriod.First][currentPeriod.Sixth]++;
+            stochasticMatrix[priorPeriod.First][currentPeriod.First]++;
+            stochasticMatrix[priorPeriod.First][currentPeriod.Second]++;
+            stochasticMatrix[priorPeriod.First][currentPeriod.Third]++;
+            stochasticMatrix[priorPeriod.First][currentPeriod.Fourth]++;
+            stochasticMatrix[priorPeriod.First][currentPeriod.Fifth]++;
+            stochasticMatrix[priorPeriod.First][currentPeriod.Sixth]++;
 
-            transposeArray[priorPeriod.Second][currentPeriod.First]++;
-            transposeArray[priorPeriod.Second][currentPeriod.Second]++;
-            transposeArray[priorPeriod.Second][currentPeriod.Third]++;
-            transposeArray[priorPeriod.Second][currentPeriod.Fourth]++;
-            transposeArray[priorPeriod.Second][currentPeriod.Fifth]++;
-            transposeArray[priorPeriod.Second][currentPeriod.Sixth]++;
+            stochasticMatrix[priorPeriod.Second][currentPeriod.First]++;
+            stochasticMatrix[priorPeriod.Second][currentPeriod.Second]++;
+            stochasticMatrix[priorPeriod.Second][currentPeriod.Third]++;
+            stochasticMatrix[priorPeriod.Second][currentPeriod.Fourth]++;
+            stochasticMatrix[priorPeriod.Second][currentPeriod.Fifth]++;
+            stochasticMatrix[priorPeriod.Second][currentPeriod.Sixth]++;
 
-            transposeArray[priorPeriod.Third][currentPeriod.First]++;
-            transposeArray[priorPeriod.Third][currentPeriod.Second]++;
-            transposeArray[priorPeriod.Third][currentPeriod.Third]++;
-            transposeArray[priorPeriod.Third][currentPeriod.Fourth]++;
-            transposeArray[priorPeriod.Third][currentPeriod.Fifth]++;
-            transposeArray[priorPeriod.Third][currentPeriod.Sixth]++;
+            stochasticMatrix[priorPeriod.Third][currentPeriod.First]++;
+            stochasticMatrix[priorPeriod.Third][currentPeriod.Second]++;
+            stochasticMatrix[priorPeriod.Third][currentPeriod.Third]++;
+            stochasticMatrix[priorPeriod.Third][currentPeriod.Fourth]++;
+            stochasticMatrix[priorPeriod.Third][currentPeriod.Fifth]++;
+            stochasticMatrix[priorPeriod.Third][currentPeriod.Sixth]++;
 
-            transposeArray[priorPeriod.Fourth][currentPeriod.First]++;
-            transposeArray[priorPeriod.Fourth][currentPeriod.Second]++;
-            transposeArray[priorPeriod.Fourth][currentPeriod.Third]++;
-            transposeArray[priorPeriod.Fourth][currentPeriod.Fourth]++;
-            transposeArray[priorPeriod.Fourth][currentPeriod.Fifth]++;
-            transposeArray[priorPeriod.Fourth][currentPeriod.Sixth]++;
+            stochasticMatrix[priorPeriod.Fourth][currentPeriod.First]++;
+            stochasticMatrix[priorPeriod.Fourth][currentPeriod.Second]++;
+            stochasticMatrix[priorPeriod.Fourth][currentPeriod.Third]++;
+            stochasticMatrix[priorPeriod.Fourth][currentPeriod.Fourth]++;
+            stochasticMatrix[priorPeriod.Fourth][currentPeriod.Fifth]++;
+            stochasticMatrix[priorPeriod.Fourth][currentPeriod.Sixth]++;
 
-            transposeArray[priorPeriod.Fifth][currentPeriod.First]++;
-            transposeArray[priorPeriod.Fifth][currentPeriod.Second]++;
-            transposeArray[priorPeriod.Fifth][currentPeriod.Third]++;
-            transposeArray[priorPeriod.Fifth][currentPeriod.Fourth]++;
-            transposeArray[priorPeriod.Fifth][currentPeriod.Fifth]++;
-            transposeArray[priorPeriod.Fifth][currentPeriod.Sixth]++;
+            stochasticMatrix[priorPeriod.Fifth][currentPeriod.First]++;
+            stochasticMatrix[priorPeriod.Fifth][currentPeriod.Second]++;
+            stochasticMatrix[priorPeriod.Fifth][currentPeriod.Third]++;
+            stochasticMatrix[priorPeriod.Fifth][currentPeriod.Fourth]++;
+            stochasticMatrix[priorPeriod.Fifth][currentPeriod.Fifth]++;
+            stochasticMatrix[priorPeriod.Fifth][currentPeriod.Sixth]++;
 
-            transposeArray[priorPeriod.Sixth][currentPeriod.First]++;
-            transposeArray[priorPeriod.Sixth][currentPeriod.Second]++;
-            transposeArray[priorPeriod.Sixth][currentPeriod.Third]++;
-            transposeArray[priorPeriod.Sixth][currentPeriod.Fourth]++;
-            transposeArray[priorPeriod.Sixth][currentPeriod.Fifth]++;
-            transposeArray[priorPeriod.Sixth][currentPeriod.Sixth]++;
+            stochasticMatrix[priorPeriod.Sixth][currentPeriod.First]++;
+            stochasticMatrix[priorPeriod.Sixth][currentPeriod.Second]++;
+            stochasticMatrix[priorPeriod.Sixth][currentPeriod.Third]++;
+            stochasticMatrix[priorPeriod.Sixth][currentPeriod.Fourth]++;
+            stochasticMatrix[priorPeriod.Sixth][currentPeriod.Fifth]++;
+            stochasticMatrix[priorPeriod.Sixth][currentPeriod.Sixth]++;
         }
 
-        private void SetupSpecialTransposeArray(List<LotteryRecord> records, int index, Dictionary<int, Dictionary<int, int>> transposeArray)
+        protected void SetupSpecialTStochasticMatrix(List<LotteryRecord> records, int index, Dictionary<int, Dictionary<int, int>> stochasticMatrix)
         {
             var priorPeriod = records[index];
             var currentPeriod = records[index + 1];
-            transposeArray[priorPeriod.Special][currentPeriod.Special]++;
+            stochasticMatrix[priorPeriod.Special][currentPeriod.Special]++;
         }
     }
 }
