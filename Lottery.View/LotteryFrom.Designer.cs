@@ -57,7 +57,6 @@
             // 
             // btnInitialSimulate
             // 
-            this.btnInitialSimulate.Enabled = false;
             this.btnInitialSimulate.Location = new System.Drawing.Point(20, 22);
             this.btnInitialSimulate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnInitialSimulate.Name = "btnInitialSimulate";

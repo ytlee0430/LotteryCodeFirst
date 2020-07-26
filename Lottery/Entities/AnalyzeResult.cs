@@ -11,7 +11,7 @@ namespace Lottery.Entities
     {
         public int Number { get; set; }
 
-        public int Point { get; set; }
+        public double Point { get; set; }
 
         public bool IsSpecial { get; set; }
 

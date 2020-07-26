@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Data.Entity.Core.Metadata.Edm;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Lottery.Enums;
 using Lottery.Interfaces.Controller;
@@ -95,7 +97,14 @@ namespace Lottery.View
             if (!int.TryParse(cbxExpectValueCount.SelectedItem.ToString(), out int expectValueCount))
                 MessageBox.Show("Type Error!");
 
-            var result = await _controller.CalculateExpectValue(lottoType, analyzeType, variableOne, expectValueCount, variableEndValue, variableTwo);
+
+            btnCalculateExpectValue.Enabled = false;
+
+            tbxExpectShoot.Text = "Calculating.....";
+
+            var result = await Task.Run(function: async () => await _controller.CalculateExpectValue(lottoType, analyzeType, variableOne, expectValueCount, variableEndValue, variableTwo));
+
+            btnCalculateExpectValue.Enabled = true;
 
             tbxExpectShoot.Text = result;
         }

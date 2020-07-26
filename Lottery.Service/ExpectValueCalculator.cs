@@ -15,16 +15,14 @@ namespace Lottery.Service
             SortedDictionary<int, double> resultDic, SortedDictionary<int, double> specialResultDic)
         {
             var indexes = new List<int>();
+            var shootCount = new ShootCount();
             for (var i = 1; i <= expectValueCount; i++)
                 indexes.Add(i);
 
-            var shootCount = new ShootCount();
-
             await Task.WhenAll(indexes.Select(i => CountShoot(i, data, analyzer, period, variableTwo, shootCount)));
 
-
-            resultDic.Add(period, (double)shootCount.Normal.Sum() / expectValueCount);
-            specialResultDic.Add(period, (double)shootCount.Special.Sum() / expectValueCount);
+            resultDic.Add(period, (double)shootCount.Normal / expectValueCount);
+            specialResultDic.Add(period, (double)shootCount.Special / expectValueCount);
         }
 
         private async Task CountShoot(int index, List<LotteryRecord> data, IAnalyzer analyzer, int period, int variableTwo, ShootCount shootCount)
@@ -38,17 +36,17 @@ namespace Lottery.Service
             var currentShot = normalResult.Count(r => r.IsShoot(currentAnswer));
             var currentSpecialShot = specialResult.Count(r => r.IsShootSpecial(currentAnswer));
 
-            if (currentShot == 6 && currentSpecialShot == 1)
-                MessageBox.Show("Bingo!");
+            //if (currentShot == 6 && currentSpecialShot == 1)
+            //    MessageBox.Show("Bingo!");
 
-            shootCount.Normal.Add(currentShot); ;
-            shootCount.Special.Add(currentSpecialShot);
+            shootCount.Normal+=(currentShot); 
+            shootCount.Special+=(currentSpecialShot);
         }
 
         private class ShootCount
         {
-            public List<int> Normal { get; set; } = new List<int>();
-            public List<int> Special { get; set; } = new List<int>();
+            public int Normal { get; set; } = 0;
+            public int Special { get; set; } = 0;
         }
     }
 }

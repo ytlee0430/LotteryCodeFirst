@@ -267,3 +267,7 @@ C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\StartUp\obj\Debug\StartUp.c
 C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\StartUp\obj\Debug\StartUp.csproj.CopyComplete
 C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\StartUp\obj\Debug\StartUp.exe
 C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\StartUp\obj\Debug\StartUp.pdb
+C:\Users\ext_brucel\Documents\LotteryCodeFirst\StartUp\bin\Debug\StartUp.exe.manifest
+C:\Users\ext_brucel\Documents\LotteryCodeFirst\StartUp\bin\Debug\StartUp.application
+C:\Users\ext_brucel\Documents\LotteryCodeFirst\StartUp\obj\Debug\StartUp.exe.manifest
+C:\Users\ext_brucel\Documents\LotteryCodeFirst\StartUp\obj\Debug\StartUp.application

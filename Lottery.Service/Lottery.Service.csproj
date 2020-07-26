@@ -49,7 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analyzer\CountAnalyzer.cs" />
+    <Compile Include="Analyzer\DistanceAnalyzer.cs" />
     <Compile Include="Analyzer\DTMCAnalyzer.cs" />
+    <Compile Include="Analyzer\EggAnalyzer.cs" />
+    <Compile Include="Analyzer\FourierAnalyzer.cs" />
     <Compile Include="Analyzer\MarkovChainAnalyzer.cs" />
     <Compile Include="Analyzer\FixedFirstSixthAnalyzer.cs" />
     <Compile Include="Analyzer\RandomAnalyzer.cs" />
@@ -57,9 +61,18 @@
     <Compile Include="Analyzer\AverageAnalyzer.cs" />
     <Compile Include="Analyzer\NodeAnalyzer.cs" />
     <Compile Include="Analyzer\StrategyResolver.cs" />
+    <Compile Include="Analyzer\WaveletAnalyzer.cs" />
     <Compile Include="CreateRecordService.cs" />
     <Compile Include="ExpectValueCalculator.cs" />
+    <Compile Include="Fourier\Complex.cs" />
+    <Compile Include="Fourier\FourierTransform.cs" />
+    <Compile Include="Fourier\Tools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Wavelet\BaseLift.cs" />
+    <Compile Include="Wavelet\cMatrixLib.cs" />
+    <Compile Include="Wavelet\HaarLift.cs" />
+    <Compile Include="Wavelet\Matrix.cs" />
+    <Compile Include="Wavelet\WaveletTransform.cs" />
     <Compile Include="Web\LotteryWebCralwer.cs" />
   </ItemGroup>
   <ItemGroup>

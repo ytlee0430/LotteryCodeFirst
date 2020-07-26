@@ -58,6 +58,16 @@ namespace StartUp
                          return new MarkovChainAnalyzer();
                      case AnalyzeType.DTMC:
                          return new DTMCAnalyzer();
+                     case AnalyzeType.Distance:
+                         return new DistanceAnalyzer();
+                     case AnalyzeType.Fourier:
+                         return new FourierAnalyzer();
+                     case AnalyzeType.Egg:
+                         return new EggAnalyzer();
+                     case AnalyzeType.Count:
+                         return new CountAnalyzer();
+                     case AnalyzeType.Wavelet:
+                         return new WaveletAnalyzer();
                      default:
                          throw new ArgumentOutOfRangeException(nameof(analyzeType), analyzeType, null);
                  }

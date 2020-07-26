@@ -14,5 +14,10 @@ namespace Lottery.Enums
         FixedFirstSixth,
         MarkovChain,
         DTMC,
+        Distance,
+        Fourier,
+        Egg,
+        Count,
+        Wavelet,
     }
 }

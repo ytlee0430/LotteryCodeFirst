@@ -34,6 +34,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,9 +46,11 @@
     <Compile Include="Cache\InMemory.cs" />
     <Compile Include="Entities\AnalyzeNode.cs" />
     <Compile Include="Entities\AnalyzeResult.cs" />
+    <Compile Include="Entities\LotteryListRecord.cs" />
     <Compile Include="Entities\LotteryRecord.cs" />
     <Compile Include="Enums\AnalyzeType.cs" />
     <Compile Include="Enums\LottoType.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Interfaces\Analyzer\IAnalyzer.cs" />
     <Compile Include="Interfaces\Controller\ILotteryFormController.cs" />
     <Compile Include="Interfaces\IExpectValueCalculator.cs" />

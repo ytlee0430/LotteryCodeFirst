@@ -18,7 +18,7 @@ namespace Lottery.Service.Analyzer
 
             while (resultNumbers.Count < 6)
             {
-                var randomNum = _random.Next(1, maxNum);
+                var randomNum = _random.Next(1, maxNum + 1);
                 if (!resultNumbers.Contains(randomNum))
                 {
                     resultNumbers.Add(randomNum);
@@ -56,7 +56,7 @@ namespace Lottery.Service.Analyzer
                 },
                 new AnalyzeResult
                 {
-                    Number = _random.Next(1,maxSpecial),Point = 100,IsSpecial = true
+                    Number = _random.Next(1,maxSpecial+1),Point = 100,IsSpecial = true
                 }
             };
         }

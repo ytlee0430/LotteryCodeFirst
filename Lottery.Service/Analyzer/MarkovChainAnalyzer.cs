@@ -11,54 +11,43 @@ namespace Lottery.Service.Analyzer
 {
     public class MarkovChainAnalyzer : IAnalyzer
     {
-        public async Task<List<AnalyzeResult>> Analyze(List<LotteryRecord> records, int period, int variableTwo)
+        public Task<List<AnalyzeResult>> Analyze(List<LotteryRecord> records, int period, int separatePeriod)
         {
-            var result = new List<AnalyzeResult>();
-            records = records.OrderByDescending(r => r.ID).Take(period).OrderBy(o => o.ID).ToList();
-            var maxNumber = records.Max(r => r.Sixth);
-            var stochasticMatrix = new Dictionary<int, Dictionary<int, int>>();
+            return Task.Run(() =>
+           {
+               var result = new List<AnalyzeResult>();
+               records = records.OrderByDescending(r => r.ID).Take(period).OrderBy(o => o.ID).ToList();
 
-            var maxNumberSp = records.Max(r => r.Special);
-            var stochasticMatrixSp = new Dictionary<int, Dictionary<int, int>>();
+               var maxNumber = records.Max(r => r.Sixth);
+               var stochasticMatrix = new Dictionary<int, Dictionary<int, int>>();
 
-            var tasks = new List<Task>
-            {
-                AnalyzeNormal(records, period, maxNumber, stochasticMatrix, result),
-                AnalyzSpecial(records, period, maxNumberSp, stochasticMatrixSp, result)
-            };
-            await Task.WhenAll(tasks);
-            return result.OrderByDescending(r => r.Point).ThenBy(r => r.Number).ToList();
+               var maxNumberSp = records.Max(r => r.Special);
+               var stochasticMatrixSp = new Dictionary<int, Dictionary<int, int>>();
+
+               AnalyzeNormal(records, period, maxNumber, stochasticMatrix, result, separatePeriod);
+               AnalyzeSpecial(records, period, maxNumberSp, stochasticMatrixSp, result, separatePeriod);
+               return result.OrderByDescending(r => r.Point).ThenBy(r => r.Number).ToList();
+           });
         }
 
-        protected async Task InitialStochasticMatrix(Dictionary<int, Dictionary<int, int>> stochasticMatrix, int maxNumber)
+        protected void AnalyzeSpecial(List<LotteryRecord> records, int period, int maxNumber,
+            Dictionary<int, Dictionary<int, int>> stochasticMatrix, List<AnalyzeResult> results, int separatePeriod)
         {
-            for (int number = 1; number <= maxNumber; number++)
-            {
-                var insertDic = new Dictionary<int, int>();
-                for (int innerNumber = 1; innerNumber <= maxNumber; innerNumber++)
-                    insertDic[innerNumber] = 0;
-                stochasticMatrix[number] = insertDic;
-            }
-        }
-
-        protected async Task AnalyzSpecial(List<LotteryRecord> records, int period, int maxNumber,
-            Dictionary<int, Dictionary<int, int>> stochasticMatrix, List<AnalyzeResult> results)
-        {
-            await InitialStochasticMatrix(stochasticMatrix, maxNumber);
-            for (int i = 0; i < period - 1; i++)
-                SetupSpecialTStochasticMatrix(records, i, stochasticMatrix);
-            var currentSpecial = records.Last().Special;
+            InitialStochasticMatrix(stochasticMatrix, maxNumber);
+            for (int i = 0; i < period - separatePeriod; i++)
+                SetupSpecialTStochasticMatrix(records, i, stochasticMatrix, separatePeriod);
+            var currentSpecial = records[records.Count - separatePeriod].Special;
             results.AddRange(stochasticMatrix[currentSpecial].Select(p => new AnalyzeResult { IsSpecial = true, Number = p.Key, Point = p.Value }));
         }
 
-        protected async Task AnalyzeNormal(List<LotteryRecord> records, int period, int maxNumber, Dictionary<int, Dictionary<int, int>> stochasticMatrix, List<AnalyzeResult> results)
+        protected void AnalyzeNormal(List<LotteryRecord> records, int period, int maxNumber, Dictionary<int, Dictionary<int, int>> stochasticMatrix, List<AnalyzeResult> results, int separatePeriod)
         {
-            await InitialStochasticMatrix(stochasticMatrix, maxNumber);
+            InitialStochasticMatrix(stochasticMatrix, maxNumber);
 
-            for (int i = 0; i < period - 1; i++)
-                await SetupNormalStochasticMatrix(records, i, stochasticMatrix);
+            for (int i = 0; i < period - separatePeriod; i++)
+                SetupNormalStochasticMatrix(records, i, stochasticMatrix, separatePeriod);
 
-            var currentPeriod = records.Last();
+            var currentPeriod = records[records.Count - separatePeriod];
 
             var scoreDic = stochasticMatrix[currentPeriod.First].ToDictionary(p => p.Key, p => p.Value);
             foreach (var pair in stochasticMatrix[currentPeriod.Second])
@@ -79,10 +68,22 @@ namespace Lottery.Service.Analyzer
             }));
         }
 
-        protected async Task SetupNormalStochasticMatrix(List<LotteryRecord> records, int index, Dictionary<int, Dictionary<int, int>> stochasticMatrix)
+        protected void InitialStochasticMatrix(Dictionary<int, Dictionary<int, int>> stochasticMatrix, int maxNumber)
+        {
+            for (int number = 1; number <= maxNumber; number++)
+            {
+                var insertDic = new Dictionary<int, int>();
+                for (int innerNumber = 1; innerNumber <= maxNumber; innerNumber++)
+                    insertDic[innerNumber] = 0;
+                stochasticMatrix[number] = insertDic;
+            }
+        }
+
+
+        protected void SetupNormalStochasticMatrix(List<LotteryRecord> records, int index, Dictionary<int, Dictionary<int, int>> stochasticMatrix, int separatePeriod)
         {
             var priorPeriod = records[index];
-            var currentPeriod = records[index + 1];
+            var currentPeriod = records[index + separatePeriod];
             stochasticMatrix[priorPeriod.First][currentPeriod.First]++;
             stochasticMatrix[priorPeriod.First][currentPeriod.Second]++;
             stochasticMatrix[priorPeriod.First][currentPeriod.Third]++;
@@ -126,10 +127,10 @@ namespace Lottery.Service.Analyzer
             stochasticMatrix[priorPeriod.Sixth][currentPeriod.Sixth]++;
         }
 
-        protected void SetupSpecialTStochasticMatrix(List<LotteryRecord> records, int index, Dictionary<int, Dictionary<int, int>> stochasticMatrix)
+        protected void SetupSpecialTStochasticMatrix(List<LotteryRecord> records, int index, Dictionary<int, Dictionary<int, int>> stochasticMatrix, int separatePeriod)
         {
             var priorPeriod = records[index];
-            var currentPeriod = records[index + 1];
+            var currentPeriod = records[index + separatePeriod];
             stochasticMatrix[priorPeriod.Special][currentPeriod.Special]++;
         }
     }
