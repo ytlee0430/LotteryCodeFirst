@@ -7,6 +7,7 @@ using Lottery.Enums;
 using Lottery.Interfaces.Controller;
 using Lottery.Interfaces.Services;
 using Lottery.Interfaces.Views;
+using Lottery.Utils;
 
 namespace Lottery.View
 {
@@ -27,21 +28,25 @@ namespace Lottery.View
                 cbxAnalyzeType.Items.Add(analyzeType);
             cbxAnalyzeType.SelectedIndex = 0;
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 1500; i++)
                 cbxVariableOne.Items.Add(i);
             cbxVariableOne.SelectedIndex = 3;
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 1500; i++)
                 cbxVariableTwo.Items.Add(i);
             cbxVariableTwo.SelectedIndex = 1;
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 1500; i++)
                 cbxVariableEndValue.Items.Add(i);
             cbxVariableEndValue.SelectedIndex = 10;
 
             for (int i = 0; i < 100; i++)
                 cbxExpectValueCount.Items.Add(i);
             cbxExpectValueCount.SelectedIndex = 10;
+
+            for (int i = 0; i < 100; i++)
+                cbxSelectCount.Items.Add(i);
+            cbxSelectCount.SelectedIndex = 6;
         }
 
         private void btnInitialSimulate_Click(object sender, System.EventArgs e)
@@ -59,54 +64,89 @@ namespace Lottery.View
 
         private async void btnAnalyzeDat_Click(object sender, EventArgs e)
         {
-            if (!Enum.TryParse(cbxAnalyzeType.SelectedItem.ToString(), out AnalyzeType analyzeType))
+            if (!Enum.TryParse(cbxAnalyzeType.Text.ToString(), out AnalyzeType analyzeType))
                 MessageBox.Show("Type Error!");
 
-            if (!Enum.TryParse(cbxLotteryType.SelectedItem.ToString(), out LottoType lottoType))
+            if (!Enum.TryParse(cbxLotteryType.Text.ToString(), out LottoType lottoType))
                 MessageBox.Show("Type Error!");
 
-            if (!int.TryParse(cbxVariableOne.SelectedItem.ToString(), out int variableOne))
+            if (!int.TryParse(cbxVariableOne.Text.ToString(), out int variableOne))
                 MessageBox.Show("Type Error!");
 
-            if (!int.TryParse(cbxVariableTwo.SelectedItem.ToString(), out int variableTwo))
+            if (!int.TryParse(cbxVariableTwo.Text.ToString(), out int variableTwo))
                 MessageBox.Show("Type Error!");
 
+
+            tbxResult.Text = "Calculating.....";
+            btnAnalyzeDat.Enabled = false;
 
             var result = await _controller.AnalyzeData(lottoType, analyzeType, variableOne, variableTwo);
 
+            btnAnalyzeDat.Enabled = true;
             tbxResult.Text = result;
         }
 
         private async void btnCalculateExpectValue_Click(object sender, EventArgs e)
         {
-            if (!Enum.TryParse(cbxAnalyzeType.SelectedItem.ToString(), out AnalyzeType analyzeType))
+            if (!Enum.TryParse(cbxAnalyzeType.Text.ToString(), out AnalyzeType analyzeType))
                 MessageBox.Show("Type Error!");
 
-            if (!Enum.TryParse(cbxLotteryType.SelectedItem.ToString(), out LottoType lottoType))
+            if (!Enum.TryParse(cbxLotteryType.Text.ToString(), out LottoType lottoType))
                 MessageBox.Show("Type Error!");
 
-            if (!int.TryParse(cbxVariableOne.SelectedItem.ToString(), out int variableOne))
+            if (!int.TryParse(cbxVariableOne.Text.ToString(), out int variableOne))
                 MessageBox.Show("Type Error!");
 
-            if (!int.TryParse(cbxVariableTwo.SelectedItem.ToString(), out int variableTwo))
+            if (!int.TryParse(cbxVariableTwo.Text.ToString(), out int variableTwo))
                 MessageBox.Show("Type Error!");
 
-            if (!int.TryParse(cbxVariableEndValue.SelectedItem.ToString(), out int variableEndValue))
+            if (!int.TryParse(cbxVariableEndValue.Text.ToString(), out int periodEnd))
                 MessageBox.Show("Type Error!");
 
-            if (!int.TryParse(cbxExpectValueCount.SelectedItem.ToString(), out int expectValueCount))
+            if (!int.TryParse(cbxExpectValueCount.Text.ToString(), out int expectValueCount))
                 MessageBox.Show("Type Error!");
 
+            if (!int.TryParse(cbxSelectCount.Text.ToString(), out int selectCount))
+                MessageBox.Show("Type Error!");
+
+            var showBingo = cbxShowBIngo.Checked;
+            var progressBar = 0;
 
             btnCalculateExpectValue.Enabled = false;
 
-            tbxExpectShoot.Text = "Calculating.....";
+            tbxExpectShoot.Text = "Calculating..... 0.0%";
 
-            var result = await Task.Run(function: async () => await _controller.CalculateExpectValue(lottoType, analyzeType, variableOne, expectValueCount, variableEndValue, variableTwo));
+            var result = await Task.Run(function: async () =>
+                await _controller.CalculateExpectValue(lottoType, analyzeType,
+                    variableOne, expectValueCount,
+                    periodEnd, variableTwo, selectCount, showBingo, () =>
+                    {
+                        progressBar++;
+                        tbxExpectShoot.UpdateText($"Calculating..... {(double)progressBar / (double)periodEnd:P}");
+                    }));
 
             btnCalculateExpectValue.Enabled = true;
 
             tbxExpectShoot.Text = result;
+        }
+
+        private void btnCalculateCost_Click(object sender, EventArgs e)
+        {
+            string promptValue = Prompt.ShowDialog("Buy Range", "Calculate Cost");
+            if (!int.TryParse(promptValue, out int buyRange))
+            {
+                MessageBox.Show("please input a number.");
+                return;
+            }
+
+            if (!Enum.TryParse(cbxLotteryType.Text.ToString(), out LottoType lottoType))
+                MessageBox.Show("Type Error!");
+
+
+            int combination = Calculator.Combination(buyRange, lottoType == LottoType.PowerLottery ? 6 : 6);
+
+            MessageBox.Show($"Cost:{combination * (lottoType == LottoType.PowerLottery ? 100 * 8 : 50):N} NT");
+
         }
     }
 }

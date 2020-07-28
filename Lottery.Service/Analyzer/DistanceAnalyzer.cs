@@ -46,7 +46,11 @@ namespace Lottery.Service.Analyzer
             });
         }
 
-        private void CalculatePointSpeedVer(Dictionary<int, LotteryListRecord> listModel, Dictionary<int, Dictionary<DistanceModel, int>> timeDataTable, Dictionary<int, Dictionary<DistanceModel, int>> timeToSPdataTable, List<AnalyzeResult> result)
+        private void CalculatePointSpeedVer(
+            Dictionary<int, LotteryListRecord> listModel, 
+            Dictionary<int, Dictionary<DistanceModel, int>> timeDataTable, 
+            Dictionary<int, Dictionary<DistanceModel, int>> timeToSPdataTable, 
+            List<AnalyzeResult> result)
         {
 
             int firstIndex = listModel.OrderBy(p => p.Key).First().Key;

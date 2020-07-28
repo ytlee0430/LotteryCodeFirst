@@ -44,12 +44,16 @@
             this.cbxVariableOne = new System.Windows.Forms.ComboBox();
             this.cbxAnalyzeType = new System.Windows.Forms.ComboBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.cbxShowBIngo = new System.Windows.Forms.CheckBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cbxSelectCount = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.cbxVariableEndValue = new System.Windows.Forms.ComboBox();
             this.tbxExpectShoot = new System.Windows.Forms.TextBox();
             this.btnCalculateExpectValue = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.cbxExpectValueCount = new System.Windows.Forms.ComboBox();
+            this.btnCalculateCost = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -88,7 +92,7 @@
             // 
             // btnAnalyzeDat
             // 
-            this.btnAnalyzeDat.Location = new System.Drawing.Point(20, 242);
+            this.btnAnalyzeDat.Location = new System.Drawing.Point(18, 262);
             this.btnAnalyzeDat.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAnalyzeDat.Name = "btnAnalyzeDat";
             this.btnAnalyzeDat.Size = new System.Drawing.Size(152, 38);
@@ -107,7 +111,7 @@
             this.panel1.Controls.Add(this.cbxLotteryType);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(196, 307);
+            this.panel1.Size = new System.Drawing.Size(196, 475);
             this.panel1.TabIndex = 4;
             // 
             // label7
@@ -122,7 +126,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 107);
+            this.label1.Location = new System.Drawing.Point(20, 108);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(96, 20);
             this.label1.TabIndex = 7;
@@ -141,7 +145,7 @@
             this.panel2.Controls.Add(this.btnAnalyzeDat);
             this.panel2.Location = new System.Drawing.Point(254, 12);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(526, 307);
+            this.panel2.Size = new System.Drawing.Size(526, 475);
             this.panel2.TabIndex = 5;
             // 
             // label6
@@ -185,11 +189,11 @@
             this.tbxResult.AcceptsReturn = true;
             this.tbxResult.AcceptsTab = true;
             this.tbxResult.AllowDrop = true;
-            this.tbxResult.Location = new System.Drawing.Point(206, 16);
+            this.tbxResult.Location = new System.Drawing.Point(206, 15);
             this.tbxResult.Multiline = true;
             this.tbxResult.Name = "tbxResult";
             this.tbxResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbxResult.Size = new System.Drawing.Size(307, 274);
+            this.tbxResult.Size = new System.Drawing.Size(307, 447);
             this.tbxResult.TabIndex = 5;
             // 
             // cbxVariableOne
@@ -213,6 +217,10 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.Moccasin;
+            this.panel3.Controls.Add(this.btnCalculateCost);
+            this.panel3.Controls.Add(this.cbxShowBIngo);
+            this.panel3.Controls.Add(this.label8);
+            this.panel3.Controls.Add(this.cbxSelectCount);
             this.panel3.Controls.Add(this.label5);
             this.panel3.Controls.Add(this.cbxVariableEndValue);
             this.panel3.Controls.Add(this.tbxExpectShoot);
@@ -221,13 +229,41 @@
             this.panel3.Controls.Add(this.cbxExpectValueCount);
             this.panel3.Location = new System.Drawing.Point(832, 12);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(526, 307);
+            this.panel3.Size = new System.Drawing.Size(536, 475);
             this.panel3.TabIndex = 6;
+            // 
+            // cbxShowBIngo
+            // 
+            this.cbxShowBIngo.AutoSize = true;
+            this.cbxShowBIngo.Location = new System.Drawing.Point(24, 292);
+            this.cbxShowBIngo.Name = "cbxShowBIngo";
+            this.cbxShowBIngo.Size = new System.Drawing.Size(120, 24);
+            this.cbxShowBIngo.TabIndex = 15;
+            this.cbxShowBIngo.Text = "Show Bingo";
+            this.cbxShowBIngo.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(20, 198);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(101, 20);
+            this.label8.TabIndex = 14;
+            this.label8.Text = "Seelct Count";
+            // 
+            // cbxSelectCount
+            // 
+            this.cbxSelectCount.FormattingEnabled = true;
+            this.cbxSelectCount.Location = new System.Drawing.Point(20, 228);
+            this.cbxSelectCount.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cbxSelectCount.Name = "cbxSelectCount";
+            this.cbxSelectCount.Size = new System.Drawing.Size(150, 28);
+            this.cbxSelectCount.TabIndex = 13;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(20, 107);
+            this.label5.Location = new System.Drawing.Point(20, 108);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(87, 20);
             this.label5.TabIndex = 11;
@@ -247,16 +283,16 @@
             this.tbxExpectShoot.AcceptsReturn = true;
             this.tbxExpectShoot.AcceptsTab = true;
             this.tbxExpectShoot.AllowDrop = true;
-            this.tbxExpectShoot.Location = new System.Drawing.Point(211, 16);
+            this.tbxExpectShoot.Location = new System.Drawing.Point(216, 14);
             this.tbxExpectShoot.Multiline = true;
             this.tbxExpectShoot.Name = "tbxExpectShoot";
             this.tbxExpectShoot.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbxExpectShoot.Size = new System.Drawing.Size(307, 274);
+            this.tbxExpectShoot.Size = new System.Drawing.Size(307, 447);
             this.tbxExpectShoot.TabIndex = 10;
             // 
             // btnCalculateExpectValue
             // 
-            this.btnCalculateExpectValue.Location = new System.Drawing.Point(20, 223);
+            this.btnCalculateExpectValue.Location = new System.Drawing.Point(20, 338);
             this.btnCalculateExpectValue.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCalculateExpectValue.Name = "btnCalculateExpectValue";
             this.btnCalculateExpectValue.Size = new System.Drawing.Size(152, 57);
@@ -268,7 +304,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(11, 14);
+            this.label4.Location = new System.Drawing.Point(10, 14);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(201, 20);
             this.label4.TabIndex = 11;
@@ -283,11 +319,22 @@
             this.cbxExpectValueCount.Size = new System.Drawing.Size(150, 28);
             this.cbxExpectValueCount.TabIndex = 10;
             // 
+            // btnCalculateCost
+            // 
+            this.btnCalculateCost.Location = new System.Drawing.Point(20, 423);
+            this.btnCalculateCost.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnCalculateCost.Name = "btnCalculateCost";
+            this.btnCalculateCost.Size = new System.Drawing.Size(152, 38);
+            this.btnCalculateCost.TabIndex = 9;
+            this.btnCalculateCost.Text = "Calculate Cost";
+            this.btnCalculateCost.UseVisualStyleBackColor = true;
+            this.btnCalculateCost.Click += new System.EventHandler(this.btnCalculateCost_Click);
+            // 
             // LotteryFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1388, 351);
+            this.ClientSize = new System.Drawing.Size(1403, 512);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -328,6 +375,10 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cbxVariableTwo;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox cbxSelectCount;
+        private System.Windows.Forms.CheckBox cbxShowBIngo;
+        private System.Windows.Forms.Button btnCalculateCost;
     }
 }
 

@@ -14,51 +14,29 @@ namespace Lottery.Service.Analyzer
         public async Task<List<AnalyzeResult>> Analyze(List<LotteryRecord> records, int period, int variableTwo)
         {
             int maxNum = records.Max(r => r.Sixth);
+            var maxNumberSp = records.Max(r => r.Special);
             List<int> resultNumbers = new List<int>();
-
-            while (resultNumbers.Count < 6)
+            var result = new List<AnalyzeResult>();
+            for (int i = 1; i <= maxNum; i++)
             {
-                var randomNum = _random.Next(1, maxNum + 1);
-                if (!resultNumbers.Contains(randomNum))
+                result.Add(new AnalyzeResult
                 {
-                    resultNumbers.Add(randomNum);
-                }
+                    IsSpecial = false,
+                    Number = i,
+                    Point = _random.Next(1, 100)
+                });
             }
 
-            int maxSpecial = records.Max(r => r.Special);
-
-
-            return new List<AnalyzeResult>
+            for (int i = 1; i <= maxNumberSp; i++)
             {
-                new AnalyzeResult
+                result.Add(new AnalyzeResult
                 {
-                    Number = resultNumbers[0],Point = 100
-                },
-                new AnalyzeResult
-                {
-                    Number = resultNumbers[1],Point = 100
-                },
-                new AnalyzeResult
-                {
-                    Number = resultNumbers[2],Point = 100
-                },
-                new AnalyzeResult
-                {
-                    Number = resultNumbers[3],Point = 100
-                },
-                new AnalyzeResult
-                {
-                    Number = resultNumbers[4],Point = 100
-                },
-                new AnalyzeResult
-                {
-                    Number = resultNumbers[5],Point = 100
-                },
-                new AnalyzeResult
-                {
-                    Number = _random.Next(1,maxSpecial+1),Point = 100,IsSpecial = true
-                }
-            };
+                    IsSpecial = true,
+                    Number = i,
+                    Point = _random.Next(1, 100)
+                });
+            }
+            return result.OrderByDescending(r => r.Point).ThenBy(r => r.Number).ToList();
         }
     }
 }

@@ -10,6 +10,6 @@ namespace Lottery.Interfaces.Controller
         void UpdateData(LottoType type, Action callBack);
         Task<string> AnalyzeData(LottoType lottoType, AnalyzeType analyzeType, int variableOne, int variableTwo);
         Task<string> CalculateExpectValue(LottoType lottoType, AnalyzeType analyzeType, int period, int expectValueCount,
-            int variableEndValue, int variableTwo);
+            int periodEnd, int variableTwo, int selectCount, bool showBingo, Action callBack);
     }
 }

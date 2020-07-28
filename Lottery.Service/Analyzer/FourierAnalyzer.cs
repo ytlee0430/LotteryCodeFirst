@@ -33,7 +33,6 @@ namespace Lottery.Service.Analyzer
                 Dictionary<int, int> numberSpToCycleTable = new Dictionary<int, int>();
 
 
-
                 CalculateCycle(numberToCycleTable, timeToNumTable, maxNumber, samplingCount);
                 CalculateCycle(numberSpToCycleTable, timeToSpNumTable, maxNumberSp, samplingCount);
 
@@ -95,7 +94,7 @@ namespace Lottery.Service.Analyzer
             Dictionary<int, double> numberToPointTable = new Dictionary<int, double>();
             Dictionary<int, double> spNumberToPointTable = new Dictionary<int, double>();
 
-            while (numberToPointTable.Count < 10)
+            while (numberToPointTable.Count < 25)
             {
                 int point = samplingCount - (int)Math.Pow(2, extensionTime);
                 if (point <= 0) break;

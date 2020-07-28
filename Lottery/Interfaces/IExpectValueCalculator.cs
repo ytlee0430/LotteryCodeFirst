@@ -8,8 +8,9 @@ namespace Lottery.Interfaces
 {
     public interface IExpectValueCalculator
     {
-        Task CalculateExpectValue(List<LotteryRecord> data, IAnalyzer analyzer, int expectValueCount, int period,
-            int variableTwo,
-            SortedDictionary<int, double> resultDic, SortedDictionary<int, double> specialResultDic);
+        Task CalculateExpectValue(List<LotteryRecord> toList, IAnalyzer analyzer,
+            int expectValueCount, int currentPeriod, int variableTwo, SortedDictionary<int, double> resultDic,
+            SortedDictionary<int, double> resultSpecialDic, int selectCount, bool showBingo, Action callBack,
+            SortedDictionary<int, double> shootIndexDic);
     }
 }

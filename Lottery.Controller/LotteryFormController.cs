@@ -61,7 +61,7 @@ namespace Lottery.Controller
         }
 
         public async Task<string> CalculateExpectValue(LottoType lottoType, AnalyzeType analyzeType, int period,
-            int expectValueCount, int variableEndValue, int variableTwo)
+            int expectValueCount, int periodEnd, int variableTwo, int selectCount, bool showBingo, Action callBack)
         {
             var analyzer = _analyzerResolver(analyzeType);
             var data = _inMemory.GetRecords(lottoType);
@@ -72,15 +72,16 @@ namespace Lottery.Controller
             var sb = new StringBuilder();
             var resultDic = new SortedDictionary<int, double>();
             var resultSpecialDic = new SortedDictionary<int, double>();
+            var shootAllDic = new SortedDictionary<int, double>();
             var indexes = new List<int>();
-            for (var currentPeriod = period; currentPeriod <= variableEndValue; currentPeriod++)
+            for (var currentPeriod = period; currentPeriod <= periodEnd; currentPeriod++)
                 indexes.Add(currentPeriod);
 
             await Task.WhenAll(indexes.Select(currentPeriod =>
                 _expectValueCalculator.CalculateExpectValue(data.ToList(), analyzer, expectValueCount,
-                    currentPeriod, variableTwo, resultDic, resultSpecialDic)
+                    currentPeriod, variableTwo, resultDic, resultSpecialDic, selectCount, showBingo, callBack, shootAllDic)
             ));
-         
+
             sw.Stop();
             sb.Append($"Cost Time:{sw.ElapsedMilliseconds} ms \r\n");
             foreach (var pair in resultDic.OrderByDescending(p => p.Value).Take(5))
@@ -90,6 +91,12 @@ namespace Lottery.Controller
 
             foreach (var pair in resultSpecialDic.OrderByDescending(p => p.Value).Take(5))
                 sb.Append($"variable:{pair.Key:D3},Expect:{pair.Value:#0.000} \r\n");
+
+
+            sb.Append("\r\n Shoot Index: \r\n");
+
+            foreach (var pair in shootAllDic.OrderBy(p => p.Value).Take(5))
+                sb.Append($"variable:{pair.Key:D3},Index:{pair.Value:#0.000} \r\n");
 
             return sb.ToString();
         }

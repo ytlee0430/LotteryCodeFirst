@@ -63,6 +63,7 @@
       <DependentUpon>LotteryFrom.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="Prompt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="LotteryFrom.resx">
       <DependentUpon>LotteryFrom.cs</DependentUpon>
