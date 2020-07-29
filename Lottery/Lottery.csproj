@@ -52,6 +52,9 @@
     <Compile Include="Enums\LottoType.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Interfaces\Analyzer\IAnalyzer.cs" />
+    <Compile Include="Interfaces\Analyzer\StrategyResolver.cs" />
+    <Compile Include="Interfaces\BonusCalculator\BonusCalculatorResolver.cs" />
+    <Compile Include="Interfaces\BonusCalculator\IBonusCalculator.cs" />
     <Compile Include="Interfaces\Controller\ILotteryFormController.cs" />
     <Compile Include="Interfaces\IExpectValueCalculator.cs" />
     <Compile Include="Interfaces\IInMemory.cs" />

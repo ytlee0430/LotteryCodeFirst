@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lottery.Enums;
 
 namespace Lottery.Utils
 {
@@ -25,6 +26,6 @@ namespace Lottery.Utils
             return value;
         }
 
-
+       
     }
 }

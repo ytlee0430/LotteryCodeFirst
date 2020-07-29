@@ -54,7 +54,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContextBase.cs" />
+    <Compile Include="Context\ContextBase.cs" />
     <Compile Include="Context\SimulateLotteryContext.cs" />
     <Compile Include="Context\PowerLotteryContext.cs" />
     <Compile Include="Context\BigLotteryContext.cs" />

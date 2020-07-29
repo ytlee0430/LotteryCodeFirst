@@ -4,13 +4,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Lottery.Enums;
 using Lottery.Interfaces;
+using Lottery.Interfaces.Analyzer;
+using Lottery.Interfaces.BonusCalculator;
 using Lottery.Interfaces.Controller;
 using Lottery.Interfaces.Services;
-using Lottery.Service.Analyzer;
 
 namespace Lottery.Controller
 {
@@ -19,17 +19,19 @@ namespace Lottery.Controller
         private readonly ICreateRecordService _createRecordService;
         private readonly IWebCralwer _webCralwer;
         private readonly AnalyzerResolver _analyzerResolver;
+        private readonly BonusCalculatorResolver _bonusCalculatorResolver;
         private readonly IInMemory _inMemory;
         private readonly IExpectValueCalculator _expectValueCalculator;
 
         public LotteryFormController(ICreateRecordService createRecordService, IWebCralwer webCralwer, AnalyzerResolver
-            analyzerResolver, IInMemory inMemory, IExpectValueCalculator expectValueCalculator)
+            analyzerResolver, IInMemory inMemory, IExpectValueCalculator expectValueCalculator, BonusCalculatorResolver bonusCalculatorResolver)
         {
             _createRecordService = createRecordService;
             _webCralwer = webCralwer;
             _analyzerResolver = analyzerResolver;
             _inMemory = inMemory;
             _expectValueCalculator = expectValueCalculator;
+            _bonusCalculatorResolver = bonusCalculatorResolver;
         }
 
         public void BtnInitialSimulate()
@@ -64,6 +66,7 @@ namespace Lottery.Controller
             int expectValueCount, int periodEnd, int variableTwo, int selectCount, bool showBingo, Action callBack)
         {
             var analyzer = _analyzerResolver(analyzeType);
+            var calculator = _bonusCalculatorResolver(lottoType);
             var data = _inMemory.GetRecords(lottoType);
 
             var sw = new Stopwatch();
@@ -79,7 +82,8 @@ namespace Lottery.Controller
 
             await Task.WhenAll(indexes.Select(currentPeriod =>
                 _expectValueCalculator.CalculateExpectValue(data.ToList(), analyzer, expectValueCount,
-                    currentPeriod, variableTwo, resultDic, resultSpecialDic, selectCount, showBingo, callBack, shootAllDic)
+                    currentPeriod, variableTwo, resultDic, resultSpecialDic, selectCount, showBingo, callBack, shootAllDic
+                    , calculator)
             ));
 
             sw.Stop();

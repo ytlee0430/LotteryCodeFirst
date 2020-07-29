@@ -9,6 +9,7 @@ using Lottery.Entities;
 using Lottery.Enums;
 using Lottery.Interfaces;
 using Lottery.Interfaces.Analyzer;
+using Lottery.Interfaces.BonusCalculator;
 using Lottery.Interfaces.Controller;
 using Lottery.Interfaces.Services;
 using Lottery.Interfaces.Views;
@@ -17,6 +18,7 @@ using Lottery.Repository.Entities;
 using Lottery.Service;
 using Lottery.Service.Analyzer;
 using Lottery.Service.AutoMapper;
+using Lottery.Service.BonusCalculator;
 using Lottery.Service.Web;
 using Lottery.View;
 using Microsoft.Extensions.DependencyInjection;
@@ -72,6 +74,20 @@ namespace StartUp
                          throw new ArgumentOutOfRangeException(nameof(analyzeType), analyzeType, null);
                  }
              });
+
+            services.AddScoped<BonusCalculatorResolver>(resolver => analyzeType =>
+            {
+                switch (analyzeType)
+                {
+                    case LottoType.PowerLottery:
+                        return new PowerLotteryCalculator();
+                    case LottoType.BigLotto:
+                    case LottoType.Simulate:
+                        return new BigLotteryBonusCalculator();
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(analyzeType), analyzeType, null);
+                }
+            });
 
             services.AddScoped<BigLotteryContext>();
             services.AddScoped<PowerLotteryContext>();

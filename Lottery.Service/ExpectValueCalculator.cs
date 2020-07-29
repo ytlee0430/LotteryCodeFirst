@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using Lottery.Entities;
 using Lottery.Interfaces;
 using Lottery.Interfaces.Analyzer;
+using Lottery.Interfaces.BonusCalculator;
 
 namespace Lottery.Service
 {
@@ -17,7 +18,7 @@ namespace Lottery.Service
         public async Task CalculateExpectValue(List<LotteryRecord> data, IAnalyzer analyzer, int expectValueCount,
             int period, int variableTwo,
             SortedDictionary<int, double> resultDic, SortedDictionary<int, double> specialResultDic, int selectCount,
-            bool showBingo, Action callback, SortedDictionary<int, double> shootIndexDic)
+            bool showBingo, Action callback, SortedDictionary<int, double> shootIndexDic, IBonusCalculator calculator)
         {
             var indexes = new List<int>();
             var shootCount = new ShootCount();
@@ -25,7 +26,7 @@ namespace Lottery.Service
                 indexes.Add(i);
 
             await Task.WhenAll(indexes.Select(i =>
-                CountShoot(i, data, analyzer, period, variableTwo, shootCount, selectCount, showBingo)));
+                CountShoot(i, data, analyzer, period, variableTwo, shootCount, selectCount, showBingo, calculator)));
 
             lock (_lock)
             {
@@ -36,7 +37,9 @@ namespace Lottery.Service
             }
         }
 
-        private async Task CountShoot(int index, List<LotteryRecord> data, IAnalyzer analyzer, int period, int variableTwo, ShootCount shootCount, int selectCount, bool showBingo)
+        private async Task CountShoot(int index, List<LotteryRecord> data, IAnalyzer analyzer,
+            int period, int variableTwo, ShootCount shootCount, int selectCount, bool showBingo,
+            IBonusCalculator calculator)
         {
             var currentAnswer = data[data.Count - index];
             var analyzeData = data.Where(d => d.ID < currentAnswer.ID).ToList();
@@ -58,6 +61,7 @@ namespace Lottery.Service
             var currentShot = normalResult.Take(selectCount).Count(r => r.IsShoot(currentAnswer));
             var currentSpecialShot = specialResult.Take(1).Count(r => r.IsShootSpecial(currentAnswer));
 
+            calculator.CalculateBonus(currentShot, currentSpecialShot > 0, selectCount);
             if (showBingo && currentShot >= 6)
                 MessageBox.Show("Bingo!");
 

@@ -60,8 +60,9 @@
     <Compile Include="Analyzer\SpecialRelatedAnalyzer.cs" />
     <Compile Include="Analyzer\AverageAnalyzer.cs" />
     <Compile Include="Analyzer\NodeAnalyzer.cs" />
-    <Compile Include="Analyzer\StrategyResolver.cs" />
     <Compile Include="Analyzer\WaveletAnalyzer.cs" />
+    <Compile Include="BonusCalculator\BigLotteryBonusCalculator.cs" />
+    <Compile Include="BonusCalculator\PowerLotteryCalculator.cs" />
     <Compile Include="CreateRecordService.cs" />
     <Compile Include="ExpectValueCalculator.cs" />
     <Compile Include="Fourier\Complex.cs" />
