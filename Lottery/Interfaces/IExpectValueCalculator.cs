@@ -12,6 +12,6 @@ namespace Lottery.Interfaces
         Task CalculateExpectValue(List<LotteryRecord> toList, IAnalyzer analyzer,
             int expectValueCount, int currentPeriod, int variableTwo, SortedDictionary<int, double> resultDic,
             SortedDictionary<int, double> resultSpecialDic, int selectCount, bool showBingo, Action callBack,
-            SortedDictionary<int, double> shootIndexDic, IBonusCalculator calculator);
+            SortedDictionary<int, double> shootIndexDic, IBonusCalculator calculator, SortedDictionary<int, double> bonusDic);
     }
 }

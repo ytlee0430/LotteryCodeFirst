@@ -11,6 +11,7 @@ using Lottery.Interfaces.Analyzer;
 using Lottery.Interfaces.BonusCalculator;
 using Lottery.Interfaces.Controller;
 using Lottery.Interfaces.Services;
+using Lottery.Utils;
 
 namespace Lottery.Controller
 {
@@ -76,6 +77,7 @@ namespace Lottery.Controller
             var resultDic = new SortedDictionary<int, double>();
             var resultSpecialDic = new SortedDictionary<int, double>();
             var shootAllDic = new SortedDictionary<int, double>();
+            var bonusDic = new SortedDictionary<int, double>();
             var indexes = new List<int>();
             for (var currentPeriod = period; currentPeriod <= periodEnd; currentPeriod++)
                 indexes.Add(currentPeriod);
@@ -83,11 +85,12 @@ namespace Lottery.Controller
             await Task.WhenAll(indexes.Select(currentPeriod =>
                 _expectValueCalculator.CalculateExpectValue(data.ToList(), analyzer, expectValueCount,
                     currentPeriod, variableTwo, resultDic, resultSpecialDic, selectCount, showBingo, callBack, shootAllDic
-                    , calculator)
+                    , calculator, bonusDic)
             ));
 
             sw.Stop();
             sb.Append($"Cost Time:{sw.ElapsedMilliseconds} ms \r\n");
+            sb.Append($"Cost Money:{expectValueCount * Calculator.Combination(selectCount, 6) * (lottoType == LottoType.BigLotto ? 50 : 800):N} NT \r\n");
             foreach (var pair in resultDic.OrderByDescending(p => p.Value).Take(5))
                 sb.Append($"variable:{pair.Key:D3},Expect:{pair.Value:#0.000} \r\n");
 
@@ -101,6 +104,12 @@ namespace Lottery.Controller
 
             foreach (var pair in shootAllDic.OrderBy(p => p.Value).Take(5))
                 sb.Append($"variable:{pair.Key:D3},Index:{pair.Value:#0.000} \r\n");
+
+
+            sb.Append("\r\n Bonus: \r\n");
+
+            foreach (var pair in bonusDic.OrderByDescending(p => p.Value).Take(5))
+                sb.Append($"variable:{pair.Key:D3},Bonus:{pair.Value:N} NT \r\n");
 
             return sb.ToString();
         }

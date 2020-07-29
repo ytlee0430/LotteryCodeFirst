@@ -271,3 +271,7 @@ C:\Users\ext_brucel\Documents\LotteryCodeFirst\StartUp\bin\Debug\StartUp.exe.man
 C:\Users\ext_brucel\Documents\LotteryCodeFirst\StartUp\bin\Debug\StartUp.application
 C:\Users\ext_brucel\Documents\LotteryCodeFirst\StartUp\obj\Debug\StartUp.exe.manifest
 C:\Users\ext_brucel\Documents\LotteryCodeFirst\StartUp\obj\Debug\StartUp.application
+C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\StartUp\bin\Debug\StartUp.exe.manifest
+C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\StartUp\bin\Debug\StartUp.application
+C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\StartUp\obj\Debug\StartUp.exe.manifest
+C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\StartUp\obj\Debug\StartUp.application

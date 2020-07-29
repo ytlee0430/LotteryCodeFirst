@@ -13,12 +13,12 @@ namespace Lottery.Service
     public class ExpectValueCalculator : IExpectValueCalculator
     {
 
-        private object _lock = new object();
+        private readonly object _lock = new object();
 
         public async Task CalculateExpectValue(List<LotteryRecord> data, IAnalyzer analyzer, int expectValueCount,
             int period, int variableTwo,
             SortedDictionary<int, double> resultDic, SortedDictionary<int, double> specialResultDic, int selectCount,
-            bool showBingo, Action callback, SortedDictionary<int, double> shootIndexDic, IBonusCalculator calculator)
+            bool showBingo, Action callback, SortedDictionary<int, double> shootIndexDic, IBonusCalculator calculator, SortedDictionary<int, double> bonusDic)
         {
             var indexes = new List<int>();
             var shootCount = new ShootCount();
@@ -33,6 +33,7 @@ namespace Lottery.Service
                 resultDic.Add(period, (double)shootCount.Normal / expectValueCount);
                 specialResultDic.Add(period, (double)shootCount.Special / expectValueCount);
                 shootIndexDic.Add(period, (double)shootCount.ShootAllIndex / expectValueCount);
+                bonusDic.Add(period, shootCount.Bonus);
                 callback();
             }
         }
@@ -54,14 +55,17 @@ namespace Lottery.Service
                 if (!normalResult[i].IsShoot(currentAnswer)) continue;
                 count++;
                 if (count != 6) continue;
-                shootIndex = i;
+                shootIndex = i + 1;
                 break;
             }
+
+            if (shootIndex == 0)
+                shootIndex = normalResult.Count;
 
             var currentShot = normalResult.Take(selectCount).Count(r => r.IsShoot(currentAnswer));
             var currentSpecialShot = specialResult.Take(1).Count(r => r.IsShootSpecial(currentAnswer));
 
-            calculator.CalculateBonus(currentShot, currentSpecialShot > 0, selectCount);
+            var bonus = calculator.CalculateBonus(currentShot, currentSpecialShot > 0, selectCount);
             if (showBingo && currentShot >= 6)
                 MessageBox.Show("Bingo!");
 
@@ -70,6 +74,7 @@ namespace Lottery.Service
                 shootCount.Normal += (currentShot);
                 shootCount.Special += (currentSpecialShot);
                 shootCount.ShootAllIndex += shootIndex;
+                shootCount.Bonus += bonus;
             }
         }
 
@@ -78,6 +83,7 @@ namespace Lottery.Service
             public int Normal { get; set; } = 0;
             public int Special { get; set; } = 0;
             public int ShootAllIndex { get; set; } = 0;
+            public int Bonus { get; set; } = 0;
         }
     }
 }
