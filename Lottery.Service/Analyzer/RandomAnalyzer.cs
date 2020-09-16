@@ -13,11 +13,13 @@ namespace Lottery.Service.Analyzer
         private Random _random = new Random();
         public async Task<List<AnalyzeResult>> Analyze(List<LotteryRecord> records, int period, int variableTwo)
         {
-            int maxNum = records.Max(r => r.Sixth);
-            var maxNumberSp = records.Max(r => r.Special);
+            var first = records.FirstOrDefault();
+            var maxNumber = first.MaxNumber;
+            var maxNumberSp = first.MaxSpecialNumber;
+
             List<int> resultNumbers = new List<int>();
             var result = new List<AnalyzeResult>();
-            for (int i = 1; i <= maxNum; i++)
+            for (int i = 1; i <= maxNumber; i++)
             {
                 result.Add(new AnalyzeResult
                 {

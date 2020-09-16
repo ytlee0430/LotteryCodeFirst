@@ -14,6 +14,10 @@ namespace Lottery.Repository.Interfaces
         DbSet<BigLotteryRecord> BigLotteryRecord { get; set; }
         DbSet<PowerLotteryRecord> PowerLotteryRecord { get; set; }
 
+        DbSet<PowerLotteryRecordSequence> PowerLotteryRecordSequence { get; set; }
+        DbSet<FiveThreeNineLotteryRecord> FiveThreeNineLotteryRecord { get; set; }
+
+        DbSet<SimulateLotteryRecord> SimulateLotteryRecord { get; set; }
         DbSet<T> Set<T>() where T : class;
 
         DbEntityEntry<T> Entry<T>(T entity) where T : class;

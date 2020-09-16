@@ -18,10 +18,12 @@ namespace Lottery.Service.Analyzer
                var result = new List<AnalyzeResult>();
                records = records.OrderByDescending(r => r.ID).Take(period).OrderBy(o => o.ID).ToList();
 
-               var maxNumber = records.Max(r => r.Sixth);
+               var first = records.FirstOrDefault();
+               var maxNumber = first.MaxNumber;
+               var maxNumberSp = first.MaxSpecialNumber;
+
                var stochasticMatrix = new Dictionary<int, Dictionary<int, int>>();
 
-               var maxNumberSp = records.Max(r => r.Special);
                var stochasticMatrixSp = new Dictionary<int, Dictionary<int, int>>();
 
                AnalyzeNormal(records, period, maxNumber, stochasticMatrix, result, separatePeriod);

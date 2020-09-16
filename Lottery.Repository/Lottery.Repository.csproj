@@ -55,9 +55,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\ContextBase.cs" />
+    <Compile Include="Context\FiveThreeNineLotteryContext.cs" />
+    <Compile Include="Context\PowerLotterySequenceContext.cs" />
     <Compile Include="Context\SimulateLotteryContext.cs" />
     <Compile Include="Context\PowerLotteryContext.cs" />
     <Compile Include="Context\BigLotteryContext.cs" />
+    <Compile Include="Entities\FiveThreeNineLotteryRecord.cs" />
+    <Compile Include="Entities\PowerLotteryRecordSequence.cs" />
     <Compile Include="Entities\SimulateLotteryRecord.cs" />
     <Compile Include="Entities\PowerLotteryRecord.cs" />
     <Compile Include="Interfaces\IEntity.cs" />
@@ -77,6 +81,18 @@
     <Compile Include="Migrations\201910081707184_adjust-databae.designer.cs">
       <DependentUpon>201910081707184_adjust-databae.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202008071422400_Add 539.cs" />
+    <Compile Include="Migrations\202008071422400_Add 539.designer.cs">
+      <DependentUpon>202008071422400_Add 539.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008071424266_Add5391.cs" />
+    <Compile Include="Migrations\202008071424266_Add5391.designer.cs">
+      <DependentUpon>202008071424266_Add5391.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009161442499_add sequence data.cs" />
+    <Compile Include="Migrations\202009161442499_add sequence data.designer.cs">
+      <DependentUpon>202009161442499_add sequence data.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -93,6 +109,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910081707184_adjust-databae.resx">
       <DependentUpon>201910081707184_adjust-databae.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008071422400_Add 539.resx">
+      <DependentUpon>202008071422400_Add 539.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008071424266_Add5391.resx">
+      <DependentUpon>202008071424266_Add5391.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009161442499_add sequence data.resx">
+      <DependentUpon>202009161442499_add sequence data.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

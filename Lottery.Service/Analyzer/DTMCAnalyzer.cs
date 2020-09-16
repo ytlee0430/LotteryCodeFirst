@@ -14,12 +14,11 @@ namespace Lottery.Service.Analyzer
         {
             var result = new List<AnalyzeResult>();
             records = records.OrderByDescending(r => r.ID).Take(period).OrderBy(o => o.ID).ToList();
-            var maxNumber = records.Max(r => r.Sixth);
-            
-            
+            var first = records.FirstOrDefault();
+            var maxNumber = first?.MaxNumber;
+            var maxNumberSp = first?.MaxSpecialNumber;
 
 
-            
             return result.OrderByDescending(r => r.Point).ThenBy(r => r.Number).ToList();
         }
     }

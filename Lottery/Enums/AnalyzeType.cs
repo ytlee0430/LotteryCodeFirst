@@ -19,5 +19,6 @@ namespace Lottery.Enums
         Egg,
         Count,
         Wavelet,
+        SequenceOrder,
     }
 }

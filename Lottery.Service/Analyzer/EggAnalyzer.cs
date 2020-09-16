@@ -16,9 +16,9 @@ namespace Lottery.Service.Analyzer
             {
                 var result = new List<AnalyzeResult>();
                 records = records.OrderByDescending(r => r.ID).ToList();
-                var maxNumber = records.Max(r => r.Sixth);
-                var maxNumberSp = records.Max(r => r.Special);
-
+                var first = records.FirstOrDefault();
+                var maxNumber = first?.MaxNumber;
+                var maxNumberSp = first?.MaxSpecialNumber;
                 var normals = new Dictionary<int, int>();
                 var specials = new Dictionary<int, int>();
 

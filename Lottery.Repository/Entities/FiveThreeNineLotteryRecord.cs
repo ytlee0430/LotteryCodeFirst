@@ -1,31 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel.DataAnnotations;
+using Lottery.Repository.Interfaces;
 
-namespace Lottery.Entities
+namespace Lottery.Repository.Entities
 {
-    public class LotteryRecord
+    public class FiveThreeNineLotteryRecord : IEntity, ILotteryRecord
     {
+        [Key]
         public int ID { get; set; }
 
+        [Required]
         public int First { get; set; }
 
+        [Required]
         public int Second { get; set; }
 
+        [Required]
         public int Third { get; set; }
 
+        [Required]
         public int Fourth { get; set; }
 
+        [Required]
         public int Fifth { get; set; }
 
+        [Required]
         public int Sixth { get; set; }
 
+        [Required]
         public int Special { get; set; }
 
+        [Required]
         public DateTime Date { get; set; }
-
-        public int MaxNumber { get; set; }
-        public int MaxSpecialNumber { get; set; }
     }
-
 }

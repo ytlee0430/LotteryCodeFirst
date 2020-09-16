@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analyzer\SequenceOrderAnalyzer.cs" />
     <Compile Include="Analyzer\CountAnalyzer.cs" />
     <Compile Include="Analyzer\DistanceAnalyzer.cs" />
     <Compile Include="Analyzer\DTMCAnalyzer.cs" />

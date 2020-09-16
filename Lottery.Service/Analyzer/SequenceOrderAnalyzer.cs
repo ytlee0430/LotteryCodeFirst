@@ -10,11 +10,10 @@ using Lottery.Interfaces.Analyzer;
 
 namespace Lottery.Service.Analyzer
 {
-    public class CountAnalyzer : IAnalyzer
+    public class SequenceOrderAnalyzer : IAnalyzer
     {
         public async Task<List<AnalyzeResult>> Analyze(List<LotteryRecord> records, int period, int variableTwo)
         {
-
             records = records.OrderByDescending(r => r.ID).Take(period).OrderBy(o => o.ID).ToList();
             var result = new List<AnalyzeResult>();
             var first = records.FirstOrDefault();
@@ -32,12 +31,12 @@ namespace Lottery.Service.Analyzer
 
             foreach (var record in records)
             {
-                normals[record.First]++;
-                normals[record.Second]++;
-                normals[record.Third]++;
-                normals[record.Fourth]++;
-                normals[record.Fifth]++;
-                normals[record.Sixth]++;
+                normals[record.First] += 6;
+                normals[record.Second] += 5;
+                normals[record.Third] += 4;
+                normals[record.Fourth] += 3;
+                normals[record.Fifth] += 2;
+                normals[record.Sixth] += 1;
                 specials[record.Special]++;
             }
 

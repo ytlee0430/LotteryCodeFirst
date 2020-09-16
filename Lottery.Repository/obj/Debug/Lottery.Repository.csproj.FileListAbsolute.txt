@@ -32,3 +32,7 @@ C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery.Repository\obj\Debu
 C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery.Repository\obj\Debug\Lottery.Repository.csproj.CopyComplete
 C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery.Repository\obj\Debug\Lottery.Repository.dll
 C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery.Repository\obj\Debug\Lottery.Repository.pdb
+C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery.Repository\obj\Debug\Lottery.Repository.csprojAssemblyReference.cache
+C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery.Repository\obj\Debug\Lottery.Repository.Migrations.Add539.resources
+C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery.Repository\obj\Debug\Lottery.Repository.Migrations.Add5391.resources
+C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery.Repository\obj\Debug\Lottery.Repository.Migrations.addsequencedata.resources

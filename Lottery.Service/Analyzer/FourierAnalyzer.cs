@@ -24,8 +24,9 @@ namespace Lottery.Service.Analyzer
 
                 Dictionary<int, List<Complex>> timeToNumTable = new Dictionary<int, List<Complex>>();
                 Dictionary<int, List<Complex>> timeToSpNumTable = new Dictionary<int, List<Complex>>();
-                var maxNumber = records.Max(r => r.Sixth);
-                var maxNumberSp = records.Max(r => r.Special);
+                var first = records.FirstOrDefault();
+                var maxNumber = first.MaxNumber;
+                var maxNumberSp = first.MaxSpecialNumber;
 
                 InitialFFTTable(records, timeToNumTable, timeToSpNumTable, maxNumber, maxNumberSp);
 

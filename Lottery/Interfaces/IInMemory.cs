@@ -12,7 +12,9 @@ namespace Lottery.Interfaces
     {
         List<LotteryRecord> GetRecords(LottoType lottoType);
         List<LotteryRecord> BigLotteryRecords { get; set; }
+        List<LotteryRecord> FivThreeNineLotteryRecords { get; set; }
         List<LotteryRecord> PowerLotteryRecords { get; set; }
+        List<LotteryRecord> PowerLotterySequenceRecords { get; set; }
         List<LotteryRecord> SimulateLotteryRecords { get; set; }
     }
 }

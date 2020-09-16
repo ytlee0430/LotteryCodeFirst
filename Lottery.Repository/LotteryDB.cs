@@ -21,8 +21,9 @@ namespace Lottery.Repository
 
         public DbSet<BigLotteryRecord> BigLotteryRecord { get; set; }
         public DbSet<PowerLotteryRecord> PowerLotteryRecord { get; set; }
-
         public DbSet<SimulateLotteryRecord> SimulateLotteryRecord { get; set; }
+        public DbSet<FiveThreeNineLotteryRecord> FiveThreeNineLotteryRecord { get; set; }
+        public DbSet<PowerLotteryRecordSequence> PowerLotteryRecordSequence { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

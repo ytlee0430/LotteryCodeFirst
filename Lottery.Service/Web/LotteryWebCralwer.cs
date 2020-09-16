@@ -23,6 +23,8 @@ namespace Lottery.Service.Web
         private LottoType _type = LottoType.BigLotto;
         private readonly BigLotteryContext _bigLotteryContext;
         private readonly PowerLotteryContext _powerLotteryContext;
+        private readonly FiveThreeNineLotteryContext _fiveThreeNineLotteryContext;
+        private readonly PowerLotterySequenceContext _powerLotterySequenceContext;
         private readonly IMapper _mapper;
         private readonly IInMemory _inMemory;
         private Action _callback;
@@ -35,12 +37,14 @@ namespace Lottery.Service.Web
 
         public bool Ready => _isLoadFinish;
 
-        public WebCralwer(BigLotteryContext bigLotteryContext, PowerLotteryContext powerLotteryContext, IMapper mapper, IInMemory inMemory)
+        public WebCralwer(BigLotteryContext bigLotteryContext, PowerLotteryContext powerLotteryContext, IMapper mapper, IInMemory inMemory, FiveThreeNineLotteryContext fiveThreeNineLotteryContext, PowerLotterySequenceContext powerLotteryRecordSequence)
         {
             _bigLotteryContext = bigLotteryContext;
             _powerLotteryContext = powerLotteryContext;
             _mapper = mapper;
             _inMemory = inMemory;
+            _fiveThreeNineLotteryContext = fiveThreeNineLotteryContext;
+            _powerLotterySequenceContext = powerLotteryRecordSequence;
         }
 
         public void InitialWebAndUpdate()
@@ -49,11 +53,28 @@ namespace Lottery.Service.Web
             webBrowser1.ScriptErrorsSuppressed = true;
             webBrowser1.DocumentCompleted += WebBrowser1_DocumentCompleted;
 
-            string uriStr = _type == LottoType.BigLotto ? "http://www.9800.com.tw/lotto649/statistics.html"
-                : "http://www.9800.com.tw/lotto38/statistics.html";
+            string uriStr = GetUri(_type);
 
             Uri uri = new Uri(uriStr);
             webBrowser1.Navigate(uri);
+        }
+
+        private string GetUri(LottoType lottoType)
+        {
+            switch (lottoType)
+            {
+                case LottoType.FivThreeNine:
+                    return "http://www.9800.com.tw/lotto539/statistics.html";
+                case LottoType.Simulate:
+                case LottoType.BigLotto:
+                    return "http://www.9800.com.tw/lotto649/statistics.html";
+                case LottoType.PowerLottery:
+                    return "http://www.9800.com.tw/lotto38/statistics.html";
+                case LottoType.PowerLotterySequence:
+                    return "http://www.9800.com.tw/lotto38/drop.html";
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(lottoType), lottoType, null);
+            }
         }
 
         public Task<bool> IsLoadFinish()
@@ -108,11 +129,17 @@ namespace Lottery.Service.Web
                 case LottoType.BigLotto:
                     lastDate = _bigLotteryContext.GetMaxDate();
                     break;
-
                 case LottoType.PowerLottery:
                     lastDate = _powerLotteryContext.GetMaxDate();
                     break;
-
+                case LottoType.FivThreeNine:
+                    lastDate = _fiveThreeNineLotteryContext.GetMaxDate();
+                    break;
+                case LottoType.PowerLotterySequence:
+                    lastDate = _powerLotterySequenceContext.GetMaxDate();
+                    break;
+                case LottoType.Simulate:
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -134,6 +161,16 @@ namespace Lottery.Service.Web
                     _inMemory.PowerLotteryRecords.AddRange(list);
                     break;
 
+                case LottoType.FivThreeNine:
+                    _fiveThreeNineLotteryContext.Add(_mapper.Map<List<FiveThreeNineLotteryRecord>>(list));
+                    _inMemory.FivThreeNineLotteryRecords.AddRange(list);
+                    break;
+                case LottoType.Simulate:
+                    break;
+                case LottoType.PowerLotterySequence:
+                    _powerLotterySequenceContext.Add(_mapper.Map<List<PowerLotteryRecordSequence>>(list));
+                    _inMemory.PowerLotterySequenceRecords.AddRange(list);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -167,27 +204,81 @@ namespace Lottery.Service.Web
 
         private void AnalyzeData(List<List<string>> crawlerResultList, DateTime lastDate, List<LotteryRecord> addList)
         {
-            foreach (var arr in crawlerResultList)
+            switch (_type)
             {
-                if (arr.Count <= 12)
-                    continue;
-                var date = Convert.ToDateTime(arr[1]);
+                case LottoType.FivThreeNine:
+                    foreach (var arr in crawlerResultList)
+                    {
+                        if (arr.Count <= 12)
+                            continue;
+                        var date = Convert.ToDateTime(arr[1]);
 
-                if (date.CompareTo(lastDate) <= 0)
-                    continue;
-                addList.Add(new LotteryRecord
-                {
-                    ID = 0,
-                    Date = Convert.ToDateTime(arr[1]),
-                    First = Convert.ToInt32(arr[2]),
-                    Second = Convert.ToInt32(arr[3]),
-                    Third = Convert.ToInt32(arr[4]),
-                    Fourth = Convert.ToInt32(arr[5]),
-                    Fifth = Convert.ToInt32(arr[6]),
-                    Sixth = Convert.ToInt32(arr[7]),
-                    Special = Convert.ToInt32(arr[8])
-                });
+                        if (date.CompareTo(lastDate) <= 0)
+                            continue;
+                        addList.Add(new LotteryRecord
+                        {
+                            ID = 0,
+                            Date = Convert.ToDateTime(arr[1]),
+                            First = Convert.ToInt32(arr[2]),
+                            Second = Convert.ToInt32(arr[3]),
+                            Third = Convert.ToInt32(arr[4]),
+                            Fourth = Convert.ToInt32(arr[5]),
+                            Fifth = Convert.ToInt32(arr[6]),
+                        });
+                    }
+                    break;
+                case LottoType.BigLotto:
+                case LottoType.PowerLottery:
+                case LottoType.Simulate:
+                    foreach (var arr in crawlerResultList)
+                    {
+                        if (arr.Count <= 12)
+                            continue;
+                        var date = Convert.ToDateTime(arr[1]);
+
+                        if (date.CompareTo(lastDate) <= 0)
+                            continue;
+                        addList.Add(new LotteryRecord
+                        {
+                            ID = 0,
+                            Date = Convert.ToDateTime(arr[1]),
+                            First = Convert.ToInt32(arr[2]),
+                            Second = Convert.ToInt32(arr[3]),
+                            Third = Convert.ToInt32(arr[4]),
+                            Fourth = Convert.ToInt32(arr[5]),
+                            Fifth = Convert.ToInt32(arr[6]),
+                            Sixth = Convert.ToInt32(arr[7]),
+                            Special = Convert.ToInt32(arr[8])
+                        });
+                    }
+                    break;
+                case LottoType.PowerLotterySequence:
+                    foreach (var arr in crawlerResultList)
+                    {
+                        var date = Convert.ToDateTime(arr[1]);
+
+                        if (date.CompareTo(lastDate) <= 0)
+                            continue;
+                        var numStr = arr[3].Replace("&nbsp;", "+");
+                        var numArr = numStr.Split('+');
+                        addList.Add(new LotteryRecord
+                        {
+                            ID = 0,
+                            Date = date,
+                            First = Convert.ToInt32(numArr[0]),
+                            Second = Convert.ToInt32(numArr[1]),
+                            Third = Convert.ToInt32(numArr[2]),
+                            Fourth = Convert.ToInt32(numArr[3]),
+                            Fifth = Convert.ToInt32(numArr[4]),
+                            Sixth = Convert.ToInt32(numArr[5]),
+                            Special = Convert.ToInt32(numArr[6])
+                        });
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
+
         }
     }
 }

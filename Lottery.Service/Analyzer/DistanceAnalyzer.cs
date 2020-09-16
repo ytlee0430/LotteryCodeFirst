@@ -17,9 +17,9 @@ namespace Lottery.Service.Analyzer
                 records = records.OrderByDescending(r => r.ID).Take(period).OrderBy(o => o.ID).ToList();
 
                 var result = new List<AnalyzeResult>();
-                var maxNumber = records.Max(r => r.Sixth);
-                var maxNumberSp = records.Max(r => r.Special);
-
+                var first = records.FirstOrDefault();
+                var maxNumber = first.MaxNumber;
+                var maxNumberSp = first.MaxSpecialNumber;
                 var listModels = records.ToDictionary(m => m.ID, m => new LotteryListRecord
                 {
                     ID = m.ID,

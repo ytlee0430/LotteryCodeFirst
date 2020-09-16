@@ -8,3 +8,4 @@ C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery\bin\Debug\Lottery.d
 C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery\bin\Debug\Lottery.pdb
 C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery\obj\Debug\Lottery.dll
 C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery\obj\Debug\Lottery.pdb
+C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery\obj\Debug\Lottery.csprojAssemblyReference.cache

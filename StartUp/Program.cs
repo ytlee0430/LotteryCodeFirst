@@ -70,6 +70,8 @@ namespace StartUp
                          return new CountAnalyzer();
                      case AnalyzeType.Wavelet:
                          return new WaveletAnalyzer();
+                     case AnalyzeType.SequenceOrder:
+                         return new SequenceOrderAnalyzer();
                      default:
                          throw new ArgumentOutOfRangeException(nameof(analyzeType), analyzeType, null);
                  }
@@ -91,6 +93,8 @@ namespace StartUp
 
             services.AddScoped<BigLotteryContext>();
             services.AddScoped<PowerLotteryContext>();
+            services.AddScoped<PowerLotterySequenceContext>();
+            services.AddScoped<FiveThreeNineLotteryContext>();
             services.AddScoped<SimulateLotteryContext>();
             var configuration = new MapperConfiguration(cfg =>
             {
@@ -103,6 +107,8 @@ namespace StartUp
             {
                 BigLotteryRecords = mapper.Map<List<LotteryRecord>>(new BigLotteryContext().GetAll().ToList()),
                 PowerLotteryRecords = mapper.Map<List<LotteryRecord>>(new PowerLotteryContext().GetAll().ToList()),
+                PowerLotterySequenceRecords = mapper.Map<List<LotteryRecord>>(new PowerLotterySequenceContext().GetAll().ToList()),
+                FivThreeNineLotteryRecords = mapper.Map<List<LotteryRecord>>(new FiveThreeNineLotteryContext().GetAll().ToList()),
                 SimulateLotteryRecords = mapper.Map<List<LotteryRecord>>(new SimulateLotteryContext().GetAll().ToList())
             };
             services.AddSingleton<IInMemory>(inMemory);

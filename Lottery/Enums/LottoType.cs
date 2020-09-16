@@ -2,8 +2,10 @@
 {
     public enum LottoType
     {
+        FivThreeNine,
         BigLotto,
         PowerLottery,
+        PowerLotterySequence, 
         Simulate
     }
 }
