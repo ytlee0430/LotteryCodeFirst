@@ -16,5 +16,6 @@ namespace Lottery.Interfaces
         List<LotteryRecord> PowerLotteryRecords { get; set; }
         List<LotteryRecord> PowerLotterySequenceRecords { get; set; }
         List<LotteryRecord> SimulateLotteryRecords { get; set; }
+        List<LotteryRecord> BigLotterySequenceRecords { get; set; }
     }
 }

@@ -54,12 +54,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Context\BigLotterySequenceContext.cs" />
     <Compile Include="Context\ContextBase.cs" />
     <Compile Include="Context\FiveThreeNineLotteryContext.cs" />
     <Compile Include="Context\PowerLotterySequenceContext.cs" />
     <Compile Include="Context\SimulateLotteryContext.cs" />
     <Compile Include="Context\PowerLotteryContext.cs" />
     <Compile Include="Context\BigLotteryContext.cs" />
+    <Compile Include="Entities\BigLotteryRecordSequence.cs" />
     <Compile Include="Entities\FiveThreeNineLotteryRecord.cs" />
     <Compile Include="Entities\PowerLotteryRecordSequence.cs" />
     <Compile Include="Entities\SimulateLotteryRecord.cs" />
@@ -93,6 +95,10 @@
     <Compile Include="Migrations\202009161442499_add sequence data.designer.cs">
       <DependentUpon>202009161442499_add sequence data.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011161324481_add big lottery sequence.cs" />
+    <Compile Include="Migrations\202011161324481_add big lottery sequence.designer.cs">
+      <DependentUpon>202011161324481_add big lottery sequence.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -118,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009161442499_add sequence data.resx">
       <DependentUpon>202009161442499_add sequence data.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011161324481_add big lottery sequence.resx">
+      <DependentUpon>202011161324481_add big lottery sequence.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

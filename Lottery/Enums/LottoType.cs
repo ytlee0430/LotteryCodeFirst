@@ -4,6 +4,7 @@
     {
         FivThreeNine,
         BigLotto,
+        BigLottoSequence,
         PowerLottery,
         PowerLotterySequence, 
         Simulate

@@ -25,6 +25,7 @@ namespace Lottery.Service.Web
         private readonly PowerLotteryContext _powerLotteryContext;
         private readonly FiveThreeNineLotteryContext _fiveThreeNineLotteryContext;
         private readonly PowerLotterySequenceContext _powerLotterySequenceContext;
+        private readonly BigLotterySequenceContext _bigLotterySequenceContext;
         private readonly IMapper _mapper;
         private readonly IInMemory _inMemory;
         private Action _callback;
@@ -37,7 +38,7 @@ namespace Lottery.Service.Web
 
         public bool Ready => _isLoadFinish;
 
-        public WebCralwer(BigLotteryContext bigLotteryContext, PowerLotteryContext powerLotteryContext, IMapper mapper, IInMemory inMemory, FiveThreeNineLotteryContext fiveThreeNineLotteryContext, PowerLotterySequenceContext powerLotteryRecordSequence)
+        public WebCralwer(BigLotteryContext bigLotteryContext, PowerLotteryContext powerLotteryContext, IMapper mapper, IInMemory inMemory, FiveThreeNineLotteryContext fiveThreeNineLotteryContext, PowerLotterySequenceContext powerLotteryRecordSequence, BigLotterySequenceContext bigLotterySequenceContext)
         {
             _bigLotteryContext = bigLotteryContext;
             _powerLotteryContext = powerLotteryContext;
@@ -45,6 +46,7 @@ namespace Lottery.Service.Web
             _inMemory = inMemory;
             _fiveThreeNineLotteryContext = fiveThreeNineLotteryContext;
             _powerLotterySequenceContext = powerLotteryRecordSequence;
+            _bigLotterySequenceContext = bigLotterySequenceContext;
         }
 
         public void InitialWebAndUpdate()
@@ -72,6 +74,8 @@ namespace Lottery.Service.Web
                     return "http://www.9800.com.tw/lotto38/statistics.html";
                 case LottoType.PowerLotterySequence:
                     return "http://www.9800.com.tw/lotto38/drop.html";
+                case LottoType.BigLottoSequence:
+                    return "http://www.9800.com.tw/lotto649/drop.html";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(lottoType), lottoType, null);
             }
@@ -140,6 +144,9 @@ namespace Lottery.Service.Web
                     break;
                 case LottoType.Simulate:
                     break;
+                case LottoType.BigLottoSequence:
+                    lastDate = _bigLotterySequenceContext.GetMaxDate();
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -170,6 +177,10 @@ namespace Lottery.Service.Web
                 case LottoType.PowerLotterySequence:
                     _powerLotterySequenceContext.Add(_mapper.Map<List<PowerLotteryRecordSequence>>(list));
                     _inMemory.PowerLotterySequenceRecords.AddRange(list);
+                    break;
+                case LottoType.BigLottoSequence:
+                    _bigLotterySequenceContext.Add(_mapper.Map<List<BigLotteryRecordSequence>>(list));
+                    _inMemory.BigLotterySequenceRecords.AddRange(list);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -253,6 +264,29 @@ namespace Lottery.Service.Web
                     }
                     break;
                 case LottoType.PowerLotterySequence:
+                    foreach (var arr in crawlerResultList)
+                    {
+                        var date = Convert.ToDateTime(arr[1]);
+
+                        if (date.CompareTo(lastDate) <= 0)
+                            continue;
+                        var numStr = arr[3].Replace("&nbsp;", "+");
+                        var numArr = numStr.Split('+');
+                        addList.Add(new LotteryRecord
+                        {
+                            ID = 0,
+                            Date = date,
+                            First = Convert.ToInt32(numArr[0]),
+                            Second = Convert.ToInt32(numArr[1]),
+                            Third = Convert.ToInt32(numArr[2]),
+                            Fourth = Convert.ToInt32(numArr[3]),
+                            Fifth = Convert.ToInt32(numArr[4]),
+                            Sixth = Convert.ToInt32(numArr[5]),
+                            Special = Convert.ToInt32(numArr[6])
+                        });
+                    }
+                    break;
+                case LottoType.BigLottoSequence:
                     foreach (var arr in crawlerResultList)
                     {
                         var date = Convert.ToDateTime(arr[1]);

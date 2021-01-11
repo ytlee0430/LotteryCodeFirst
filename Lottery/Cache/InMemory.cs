@@ -22,6 +22,8 @@ namespace Lottery.Cache
                     return FivThreeNineLotteryRecords;
                 case LottoType.PowerLotterySequence:
                     return PowerLotterySequenceRecords;
+                case LottoType.BigLottoSequence:
+                    return BigLotterySequenceRecords;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(lottoType), lottoType, null);
             }
@@ -31,6 +33,7 @@ namespace Lottery.Cache
         public List<LotteryRecord> PowerLotteryRecords { get; set; }
         public List<LotteryRecord> FivThreeNineLotteryRecords { get; set; }
         public List<LotteryRecord> SimulateLotteryRecords { get; set; }
+        public List<LotteryRecord> BigLotterySequenceRecords { get; set; }
         public List<LotteryRecord> PowerLotterySequenceRecords { get; set; }
     }
 }

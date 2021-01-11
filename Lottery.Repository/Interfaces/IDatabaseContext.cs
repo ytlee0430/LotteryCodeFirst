@@ -12,11 +12,10 @@ namespace Lottery.Repository.Interfaces
     public interface IDatabaseContext
     {
         DbSet<BigLotteryRecord> BigLotteryRecord { get; set; }
+        DbSet<BigLotteryRecordSequence> BigLotteryRecordSequence { get; set; }
         DbSet<PowerLotteryRecord> PowerLotteryRecord { get; set; }
-
         DbSet<PowerLotteryRecordSequence> PowerLotteryRecordSequence { get; set; }
         DbSet<FiveThreeNineLotteryRecord> FiveThreeNineLotteryRecord { get; set; }
-
         DbSet<SimulateLotteryRecord> SimulateLotteryRecord { get; set; }
         DbSet<T> Set<T>() where T : class;
 

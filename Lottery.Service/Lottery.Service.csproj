@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analyzer\DateNumberAnalyzer.cs" />
+    <Compile Include="Analyzer\SequenceFirstAnalyzer.cs" />
     <Compile Include="Analyzer\SequenceOrderAnalyzer.cs" />
     <Compile Include="Analyzer\CountAnalyzer.cs" />
     <Compile Include="Analyzer\DistanceAnalyzer.cs" />
@@ -58,6 +60,7 @@
     <Compile Include="Analyzer\MarkovChainAnalyzer.cs" />
     <Compile Include="Analyzer\FixedFirstSixthAnalyzer.cs" />
     <Compile Include="Analyzer\RandomAnalyzer.cs" />
+    <Compile Include="Analyzer\FrequencyAnalyzer.cs" />
     <Compile Include="Analyzer\SpecialRelatedAnalyzer.cs" />
     <Compile Include="Analyzer\AverageAnalyzer.cs" />
     <Compile Include="Analyzer\NodeAnalyzer.cs" />

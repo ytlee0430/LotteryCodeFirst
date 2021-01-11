@@ -72,6 +72,12 @@ namespace StartUp
                          return new WaveletAnalyzer();
                      case AnalyzeType.SequenceOrder:
                          return new SequenceOrderAnalyzer();
+                     case AnalyzeType.DateNumber:
+                         return new DateNumberAnalyzer();
+                     case AnalyzeType.Frequency:
+                         return new FrequencyAnalyzer();
+                     case AnalyzeType.SequenceFirst:
+                         return new SequenceFirstAnalyzer();
                      default:
                          throw new ArgumentOutOfRangeException(nameof(analyzeType), analyzeType, null);
                  }
@@ -82,16 +88,20 @@ namespace StartUp
                 switch (analyzeType)
                 {
                     case LottoType.PowerLottery:
+                    case LottoType.PowerLotterySequence:
                         return new PowerLotteryCalculator();
                     case LottoType.BigLotto:
                     case LottoType.Simulate:
+                    case LottoType.BigLottoSequence:
                         return new BigLotteryBonusCalculator();
+                    case LottoType.FivThreeNine:
                     default:
                         throw new ArgumentOutOfRangeException(nameof(analyzeType), analyzeType, null);
                 }
             });
 
             services.AddScoped<BigLotteryContext>();
+            services.AddScoped<BigLotterySequenceContext>();
             services.AddScoped<PowerLotteryContext>();
             services.AddScoped<PowerLotterySequenceContext>();
             services.AddScoped<FiveThreeNineLotteryContext>();
@@ -108,6 +118,7 @@ namespace StartUp
                 BigLotteryRecords = mapper.Map<List<LotteryRecord>>(new BigLotteryContext().GetAll().ToList()),
                 PowerLotteryRecords = mapper.Map<List<LotteryRecord>>(new PowerLotteryContext().GetAll().ToList()),
                 PowerLotterySequenceRecords = mapper.Map<List<LotteryRecord>>(new PowerLotterySequenceContext().GetAll().ToList()),
+                BigLotterySequenceRecords = mapper.Map<List<LotteryRecord>>(new BigLotterySequenceContext().GetAll().ToList()),
                 FivThreeNineLotteryRecords = mapper.Map<List<LotteryRecord>>(new FiveThreeNineLotteryContext().GetAll().ToList()),
                 SimulateLotteryRecords = mapper.Map<List<LotteryRecord>>(new SimulateLotteryContext().GetAll().ToList())
             };

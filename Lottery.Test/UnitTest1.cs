@@ -46,5 +46,23 @@ namespace Lottery.Test
         {
             await Task.Delay(delayTime * 1000);
         }
+
+
+        [TestCase(5, 7, 6, true)]
+        [TestCase(5, 7, 10, false)]
+        [TestCase(-411, 7, 0, true)]
+        [TestCase(int.MinValue, int.MinValue, 0, true)]
+        public void CheckNumberTest(int a, int b, int n, bool result)
+        {
+            var ex = result;
+            var actual = CheckNumber(a, b, n);
+            Assert.AreEqual(actual, result);
+        }
+
+
+        public bool CheckNumber(int a, int b, int n)
+        {
+            return (a > n && b < n) || (a < n && b > n);
+        }
     }
 }

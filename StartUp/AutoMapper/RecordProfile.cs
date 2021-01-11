@@ -14,6 +14,7 @@ namespace Lottery.Service.AutoMapper
         public RecordProfile()
         {
             CreateMap<LotteryRecord, BigLotteryRecord>();
+            CreateMap<LotteryRecord, BigLotteryRecordSequence>();
             CreateMap<LotteryRecord, PowerLotteryRecord>();
             CreateMap<LotteryRecord, PowerLotteryRecordSequence>();
             CreateMap<LotteryRecord, FiveThreeNineLotteryRecord>();
@@ -21,19 +22,28 @@ namespace Lottery.Service.AutoMapper
 
             CreateMap<BigLotteryRecord, LotteryRecord>().ForMember(dest => dest.MaxNumber,
                 opt => opt.MapFrom(src => 49)).ForMember(dest => dest.MaxSpecialNumber,
-                opt => opt.MapFrom(src => 49));
+                opt => opt.MapFrom(src => 49)).ForMember(dest => dest.OpenDayOfWeek,
+                opt => opt.MapFrom(src => DayOfWeek.Tuesday));
+            CreateMap<BigLotteryRecordSequence, LotteryRecord>().ForMember(dest => dest.MaxNumber,
+                opt => opt.MapFrom(src => 49)).ForMember(dest => dest.MaxSpecialNumber,
+                opt => opt.MapFrom(src => 49)).ForMember(dest => dest.OpenDayOfWeek,
+                opt => opt.MapFrom(src => DayOfWeek.Tuesday));
             CreateMap<PowerLotteryRecord, LotteryRecord>().ForMember(dest => dest.MaxNumber,
                 opt => opt.MapFrom(src => 38)).ForMember(dest => dest.MaxSpecialNumber,
-                opt => opt.MapFrom(src => 8));
+                opt => opt.MapFrom(src => 8)).ForMember(dest => dest.OpenDayOfWeek,
+                opt => opt.MapFrom(src => DayOfWeek.Monday));
             CreateMap<FiveThreeNineLotteryRecord, LotteryRecord>().ForMember(dest => dest.MaxNumber,
                 opt => opt.MapFrom(src => 39)).ForMember(dest => dest.MaxSpecialNumber,
-                opt => opt.MapFrom(src => 0));
+                opt => opt.MapFrom(src => 0)).ForMember(dest => dest.OpenDayOfWeek,
+                opt => opt.MapFrom(src => DayOfWeek.Monday));
             CreateMap<PowerLotteryRecordSequence, LotteryRecord>().ForMember(dest => dest.MaxNumber,
                 opt => opt.MapFrom(src => 49)).ForMember(dest => dest.MaxSpecialNumber,
-                opt => opt.MapFrom(src => 8));
+                opt => opt.MapFrom(src => 8)).ForMember(dest => dest.OpenDayOfWeek,
+                opt => opt.MapFrom(src => DayOfWeek.Monday));
             CreateMap<SimulateLotteryRecord, LotteryRecord>().ForMember(dest => dest.MaxNumber,
                 opt => opt.MapFrom(src => 49)).ForMember(dest => dest.MaxSpecialNumber,
-                opt => opt.MapFrom(src => 49));
+                opt => opt.MapFrom(src => 49)).ForMember(dest => dest.OpenDayOfWeek,
+                opt => opt.MapFrom(src => DayOfWeek.Tuesday));
         }
     }
 }

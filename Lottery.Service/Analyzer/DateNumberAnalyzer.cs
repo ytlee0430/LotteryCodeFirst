@@ -10,15 +10,20 @@ using Lottery.Interfaces.Analyzer;
 
 namespace Lottery.Service.Analyzer
 {
-    public class CountAnalyzer : IAnalyzer
+    public class DateNumberAnalyzer : IAnalyzer
     {
         public async Task<List<AnalyzeResult>> Analyze(List<LotteryRecord> records, int period, int variableTwo)
         {
             records = records.OrderByDescending(r => r.ID).Take(period).OrderBy(o => o.ID).ToList();
             var result = new List<AnalyzeResult>();
-            var first = records.FirstOrDefault();
-            var maxNumber = first?.MaxNumber;
-            var maxNumberSp = first?.MaxSpecialNumber;
+            var last = records.LastOrDefault();
+            var maxNumber = last?.MaxNumber;
+            var maxNumberSp = last?.MaxSpecialNumber;
+            var openDayOfWeek = last?.OpenDayOfWeek;
+            var lastDate = last.Date;
+            var nextDateDay = lastDate.DayOfWeek == openDayOfWeek
+                ? lastDate.AddDays(3).Day % 10
+                : lastDate.AddDays(4).Day % 10;
 
             var normals = new Dictionary<int, int>();
             var specials = new Dictionary<int, int>();
@@ -29,7 +34,8 @@ namespace Lottery.Service.Analyzer
             for (int i = 1; i <= maxNumberSp; i++)
                 specials.Add(i, 0);
 
-            foreach (var record in records)
+
+            foreach (var record in records.Where(record => record.Date.Day % 10 == nextDateDay))
             {
                 normals[record.First]++;
                 normals[record.Second]++;

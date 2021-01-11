@@ -10,7 +10,7 @@ using Lottery.Interfaces.Analyzer;
 
 namespace Lottery.Service.Analyzer
 {
-    public class CountAnalyzer : IAnalyzer
+    public class SequenceFirstAnalyzer : IAnalyzer
     {
         public async Task<List<AnalyzeResult>> Analyze(List<LotteryRecord> records, int period, int variableTwo)
         {
@@ -31,12 +31,7 @@ namespace Lottery.Service.Analyzer
 
             foreach (var record in records)
             {
-                normals[record.First]++;
-                normals[record.Second]++;
-                normals[record.Third]++;
-                normals[record.Fourth]++;
-                normals[record.Fifth]++;
-                normals[record.Sixth]++;
+                normals[record.First] ++;
                 specials[record.Special]++;
             }
 

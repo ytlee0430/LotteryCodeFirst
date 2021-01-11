@@ -20,5 +20,8 @@ namespace Lottery.Enums
         Count,
         Wavelet,
         SequenceOrder,
+        SequenceFirst,
+        DateNumber,
+        Frequency,
     }
 }
