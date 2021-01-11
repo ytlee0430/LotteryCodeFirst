@@ -78,6 +78,8 @@ namespace StartUp
                          return new FrequencyAnalyzer();
                      case AnalyzeType.SequenceFirst:
                          return new SequenceFirstAnalyzer();
+                     case AnalyzeType.AverageDiff:
+                         return new AverageDiffAnalyzer();
                      default:
                          throw new ArgumentOutOfRangeException(nameof(analyzeType), analyzeType, null);
                  }

@@ -15,3 +15,11 @@ C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery.Controller\obj\Debu
 C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery.Controller\obj\Debug\Lottery.Controller.csproj.CopyComplete
 C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery.Controller\obj\Debug\Lottery.Controller.dll
 C:\Users\李奕德\Documents\GitHub\LotteryCodeFirst\Lottery.Controller\obj\Debug\Lottery.Controller.pdb
+E:\Git\LotteryCodeFirst\Lottery.Controller\bin\Debug\Lottery.Controller.dll
+E:\Git\LotteryCodeFirst\Lottery.Controller\bin\Debug\Lottery.Controller.pdb
+E:\Git\LotteryCodeFirst\Lottery.Controller\bin\Debug\Lottery.dll
+E:\Git\LotteryCodeFirst\Lottery.Controller\bin\Debug\Lottery.pdb
+E:\Git\LotteryCodeFirst\Lottery.Controller\obj\Debug\Lottery.Controller.csprojAssemblyReference.cache
+E:\Git\LotteryCodeFirst\Lottery.Controller\obj\Debug\Lottery.Controller.csproj.CopyComplete
+E:\Git\LotteryCodeFirst\Lottery.Controller\obj\Debug\Lottery.Controller.dll
+E:\Git\LotteryCodeFirst\Lottery.Controller\obj\Debug\Lottery.Controller.pdb

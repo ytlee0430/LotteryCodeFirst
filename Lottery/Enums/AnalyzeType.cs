@@ -23,5 +23,6 @@ namespace Lottery.Enums
         SequenceFirst,
         DateNumber,
         Frequency,
+        AverageDiff,
     }
 }
