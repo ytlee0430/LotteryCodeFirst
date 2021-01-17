@@ -116,13 +116,16 @@ namespace Lottery.View
 
             tbxExpectShoot.Text = "Calculating..... 0.0%";
 
+            var totalCount = (periodEnd - variableOne) * (variableTwo == 0 ? (periodEnd - variableOne) : 1);
+
+
             var result = await Task.Run(function: async () =>
                 await _controller.CalculateExpectValue(lottoType, analyzeType,
                     variableOne, expectValueCount,
                     periodEnd, variableTwo, selectCount, showBingo, () =>
                     {
                         progressBar++;
-                        tbxExpectShoot.UpdateText($"Calculating..... {(double)progressBar / (double)periodEnd:P}");
+                        tbxExpectShoot.UpdateText($"Calculating..... {(double)progressBar / (double)totalCount:P}");
                     }));
 
             btnCalculateExpectValue.Enabled = true;

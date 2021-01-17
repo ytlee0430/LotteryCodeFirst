@@ -62,3 +62,4 @@ E:\Git\LotteryCodeFirst\Lottery.Service\obj\Debug\Lottery.Service.csprojAssembly
 E:\Git\LotteryCodeFirst\Lottery.Service\obj\Debug\Lottery.Service.csproj.CopyComplete
 E:\Git\LotteryCodeFirst\Lottery.Service\obj\Debug\Lottery.Service.dll
 E:\Git\LotteryCodeFirst\Lottery.Service\obj\Debug\Lottery.Service.pdb
+E:\Git\LotteryCodeFirst\Lottery.Service\bin\Debug\System.ValueTuple.dll

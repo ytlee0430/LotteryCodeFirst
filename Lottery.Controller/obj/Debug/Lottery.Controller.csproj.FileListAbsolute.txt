@@ -23,3 +23,5 @@ E:\Git\LotteryCodeFirst\Lottery.Controller\obj\Debug\Lottery.Controller.csprojAs
 E:\Git\LotteryCodeFirst\Lottery.Controller\obj\Debug\Lottery.Controller.csproj.CopyComplete
 E:\Git\LotteryCodeFirst\Lottery.Controller\obj\Debug\Lottery.Controller.dll
 E:\Git\LotteryCodeFirst\Lottery.Controller\obj\Debug\Lottery.Controller.pdb
+E:\Git\LotteryCodeFirst\Lottery.Controller\bin\Debug\System.ValueTuple.dll
+E:\Git\LotteryCodeFirst\Lottery.Controller\bin\Debug\System.ValueTuple.xml

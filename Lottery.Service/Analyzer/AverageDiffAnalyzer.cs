@@ -97,7 +97,8 @@ namespace Lottery.Service.Analyzer
             result.Add(new AnalyzeResult
             {
                 Number = (int)Math.Round(special + diff),
-                Point = 10
+                Point = 10,
+                IsSpecial = true
             });
             return result;
         }

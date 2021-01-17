@@ -17,8 +17,9 @@ namespace Lottery.Service
 
         public async Task CalculateExpectValue(List<LotteryRecord> data, IAnalyzer analyzer, int expectValueCount,
             int period, int variableTwo,
-            SortedDictionary<int, double> resultDic, SortedDictionary<int, double> specialResultDic, int selectCount,
-            bool showBingo, Action callback, SortedDictionary<int, double> shootIndexDic, IBonusCalculator calculator, SortedDictionary<int, double> bonusDic)
+            SortedDictionary<(int period, int variable2), double> resultDic, SortedDictionary<(int period, int variable2), double> specialResultDic, int selectCount,
+            bool showBingo, Action callback, SortedDictionary<(int period, int variable2), double> shootIndexDic, IBonusCalculator calculator,
+            SortedDictionary<(int period, int variable2), double> bonusDic)
         {
             var indexes = new List<int>();
             var shootCount = new ShootCount();
@@ -30,10 +31,10 @@ namespace Lottery.Service
 
             lock (_lock)
             {
-                resultDic.Add(period, (double)shootCount.Normal / expectValueCount);
-                specialResultDic.Add(period, (double)shootCount.Special / expectValueCount);
-                shootIndexDic.Add(period, (double)shootCount.ShootAllIndex / expectValueCount);
-                bonusDic.Add(period, shootCount.Bonus);
+                resultDic.Add((period, variableTwo), (double)shootCount.Normal / expectValueCount);
+                specialResultDic.Add((period, variableTwo), (double)shootCount.Special / expectValueCount);
+                shootIndexDic.Add((period, variableTwo), (double)shootCount.ShootAllIndex / expectValueCount);
+                bonusDic.Add((period, variableTwo), shootCount.Bonus);
                 callback();
             }
         }
