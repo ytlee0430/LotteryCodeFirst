@@ -80,7 +80,7 @@ namespace Lottery.Controller
             var bonusDic = new SortedDictionary<(int period, int variable2), double>();
             var indexes = new List<(int period, int variable2)>();
             for (var currentPeriod = period; currentPeriod <= periodEnd; currentPeriod++)
-                for (var variable2 = 0; variable2 < currentPeriod; variable2++)
+                for (var variable2 = 1; variable2 < currentPeriod; variable2++)
                 {
                     if (variableTwo != 0)
                     {

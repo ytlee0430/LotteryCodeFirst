@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HtmlAgilityPack;
 using Lottery.Entities;
 using Lottery.Interfaces.Analyzer;
 
 namespace Lottery.Service.Analyzer
 {
-    public class AverageDiffAnalyzer : IAnalyzer
+    public class AverageDiffMulAnalyzer : IAnalyzer
     {
         public async Task<List<AnalyzeResult>> Analyze(List<LotteryRecord> records, int period, int samplePeriod)
         {
@@ -56,47 +57,83 @@ namespace Lottery.Service.Analyzer
             sixthSample /= (double)samplePeriod;
             specialSample /= (double)samplePeriod;
 
+            var min = 1;
+            var max = records.First().MaxNumber;
 
             var diff = first - firstSample;
+            diff *= samplePeriod;
+            var re = first + diff;
+            re = Math.Max(min, re);
+            re = Math.Min(max, re);
             result.Add(new AnalyzeResult
             {
-                Number = (int)Math.Round(first + diff),
-                Point = 10 
+                Number = (int)Math.Round(re),
+                Point = 10
             });
+
             diff = second - secondSample;
+            diff *= samplePeriod;
+            re = second + diff;
+            re = Math.Max(min, re);
+            re = Math.Min(max, re);
             result.Add(new AnalyzeResult
             {
-                Number = (int)Math.Round(second + diff),
+                Number = (int)Math.Round(re),
                 Point = 10
             });
+
             diff = third - thirdSample;
+            diff *= samplePeriod;
+            re = third + diff;
+            re = Math.Max(min, re);
+            re = Math.Min(max, re);
             result.Add(new AnalyzeResult
             {
-                Number = (int) Math.Round(third + diff),
+                Number = (int)Math.Round(re),
                 Point = 10
             });
+
             diff = fourth - fourthSample;
+            diff *= samplePeriod;
+            re = fourth + diff;
+            re = Math.Max(min, re);
+            re = Math.Min(max, re);
             result.Add(new AnalyzeResult
             {
-                Number = (int)Math.Round(fourth + diff),
+                Number = (int)Math.Round(re),
                 Point = 10
             });
+
             diff = fifth - fifthSample;
+            diff *= samplePeriod;
+            re = fifth + diff;
+            re = Math.Max(min, re);
+            re = Math.Min(max, re);
             result.Add(new AnalyzeResult
             {
-                Number = (int)Math.Round(fifth + diff),
+                Number = (int)Math.Round(re),
                 Point = 10
             });
+
             diff = sixth - sixthSample;
+            diff *= samplePeriod;
+            re = sixth + diff;
+            re = Math.Max(min, re);
+            re = Math.Min(max, re);
             result.Add(new AnalyzeResult
             {
-                Number = (int)Math.Round(sixth + diff),
+                Number = (int)Math.Round(re),
                 Point = 10
             });
+
             diff = special - specialSample;
+            diff *= samplePeriod;
+            re = diff + special;
+            re = Math.Max(min, re);
+            re = Math.Min(records.First().MaxSpecialNumber, re);
             result.Add(new AnalyzeResult
             {
-                Number = (int)Math.Round(special + diff),
+                Number = (int)Math.Round(re),
                 Point = 10,
                 IsSpecial = true
             });
