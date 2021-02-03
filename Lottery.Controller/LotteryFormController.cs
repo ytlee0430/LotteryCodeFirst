@@ -103,13 +103,13 @@ namespace Lottery.Controller
             foreach (var pair in resultDic.OrderByDescending(p => p.Value).Take(5))
                 sb.Append($"period:{pair.Key.period:D3},variable2:{pair.Key.variable2:D3},Expect:{pair.Value:#0.000} \r\n");
 
-            sb.Append("\r\n Special Number: \r\n");
+            sb.Append("\r\nSpecial Number: \r\n");
 
             foreach (var pair in resultSpecialDic.OrderByDescending(p => p.Value).Take(5))
                 sb.Append($"period:{pair.Key.period:D3},variable2:{pair.Key.variable2:D3},Expect:{pair.Value:#0.000} \r\n");
 
 
-            sb.Append("\r\n Shoot Index: \r\n");
+            sb.Append("\r\nShoot Index: \r\n");
 
             foreach (var pair in shootAllDic.OrderBy(p => p.Value).Take(5))
                 sb.Append($"period:{pair.Key:D3},Index:{pair.Value:#0.000} \r\n");

@@ -9,7 +9,7 @@ using Lottery.Interfaces.Analyzer;
 
 namespace Lottery.Service.Analyzer
 {
-    public class AverageDiffMulAnalyzer : IAnalyzer
+    public class AverageDiffAnalyzer : IAnalyzer
     {
         public async Task<List<AnalyzeResult>> Analyze(List<LotteryRecord> records, int period, int samplePeriod)
         {
@@ -57,131 +57,47 @@ namespace Lottery.Service.Analyzer
             sixthSample /= (double)samplePeriod;
             specialSample /= (double)samplePeriod;
 
-            var min = 1;
-            var max = records.First().MaxNumber;
-
             var diff = first - firstSample;
-            diff *= samplePeriod;
-            var re = first + diff;
-            if (re > max)
-            {
-                re = max;
-                max--;
-            }
-            if (re < min)
-            {
-                re = min;
-                min++;
-            }
-
             result.Add(new AnalyzeResult
             {
-                Number = (int)Math.Round(re),
+                Number = (int)Math.Round(first + diff),
                 Point = 10
             });
-
             diff = second - secondSample;
-            diff *= samplePeriod;
-            re = second + diff;
-            if (re > max)
-            {
-                re = max;
-                max--;
-            }
-            if (re < min)
-            {
-                re = min;
-                min++;
-            }
             result.Add(new AnalyzeResult
             {
-                Number = (int)Math.Round(re),
+                Number = (int)Math.Round(second + diff),
                 Point = 10
             });
-
             diff = third - thirdSample;
-            diff *= samplePeriod;
-            re = third + diff;
-            if (re > max)
-            {
-                re = max;
-                max--;
-            }
-            if (re < min)
-            {
-                re = min;
-                min++;
-            }
             result.Add(new AnalyzeResult
             {
-                Number = (int)Math.Round(re),
+                Number = (int)Math.Round(third + diff),
                 Point = 10
             });
-
             diff = fourth - fourthSample;
-            diff *= samplePeriod;
-            re = fourth + diff;
-            if (re > max)
-            {
-                re = max;
-                max--;
-            }
-            if (re < min)
-            {
-                re = min;
-                min++;
-            }
             result.Add(new AnalyzeResult
             {
-                Number = (int)Math.Round(re),
+                Number = (int)Math.Round(fourth + diff),
                 Point = 10
             });
-
             diff = fifth - fifthSample;
-            diff *= samplePeriod;
-            re = fifth + diff;
-            if (re > max)
-            {
-                re = max;
-                max--;
-            }
-            if (re < min)
-            {
-                re = min;
-                min++;
-            }
             result.Add(new AnalyzeResult
             {
-                Number = (int)Math.Round(re),
+                Number = (int)Math.Round(fifth + diff),
                 Point = 10
             });
-
             diff = sixth - sixthSample;
-            diff *= samplePeriod;
-            re = sixth + diff;
-            if (re > max)
-            {
-                re = max;
-            }
-            if (re < min)
-            {
-                re = min;
-            }
             result.Add(new AnalyzeResult
             {
-                Number = (int)Math.Round(re),
+                Number = (int)Math.Round(sixth + diff),
                 Point = 10
             });
 
-            min = 1;
             diff = special - specialSample;
-            diff *= samplePeriod;
-            re = diff + special;
-            re = Math.Max(min, re);
-            re = Math.Min(records.First().MaxSpecialNumber, re);
             result.Add(new AnalyzeResult
             {
-                Number = (int)Math.Round(re),
+                Number = (int)Math.Round(special + diff),
                 Point = 10,
                 IsSpecial = true
             });

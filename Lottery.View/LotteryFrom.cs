@@ -26,7 +26,7 @@ namespace Lottery.View
 
             foreach (AnalyzeType analyzeType in Enum.GetValues(typeof(AnalyzeType)))
                 cbxAnalyzeType.Items.Add(analyzeType);
-            cbxAnalyzeType.SelectedIndex = 0;
+            cbxAnalyzeType.SelectedIndex = Enum.GetValues(typeof(AnalyzeType)).Length - 1;
 
             for (int i = 0; i < 1500; i++)
                 cbxVariableOne.Items.Add(i);
@@ -34,15 +34,15 @@ namespace Lottery.View
 
             for (int i = 0; i < 1500; i++)
                 cbxVariableTwo.Items.Add(i);
-            cbxVariableTwo.SelectedIndex = 1;
+            cbxVariableTwo.SelectedIndex = 0;
 
             for (int i = 0; i < 1500; i++)
                 cbxVariableEndValue.Items.Add(i);
-            cbxVariableEndValue.SelectedIndex = 10;
+            cbxVariableEndValue.SelectedIndex = 500;
 
             for (int i = 0; i < 100; i++)
                 cbxExpectValueCount.Items.Add(i);
-            cbxExpectValueCount.SelectedIndex = 10;
+            cbxExpectValueCount.SelectedIndex = 5;
 
             for (int i = 0; i < 100; i++)
                 cbxSelectCount.Items.Add(i);
@@ -116,7 +116,7 @@ namespace Lottery.View
 
             tbxExpectShoot.Text = "Calculating..... 0.0%";
 
-            var totalCount = (periodEnd - variableOne) * (variableTwo == 0 ? (periodEnd - variableOne) : 1);
+            var totalCount = (periodEnd - variableOne) * (variableTwo == 0 ? (periodEnd - variableOne) / 2 : 1);
 
 
             var result = await Task.Run(function: async () =>

@@ -82,6 +82,8 @@ namespace StartUp
                          return new AverageDiffLogAnalyzer();
                      case AnalyzeType.AverageDiffMul:
                          return new AverageDiffMulAnalyzer();
+                     case AnalyzeType.AverageDiff:
+                         return new AverageDiffAnalyzer();
                      default:
                          throw new ArgumentOutOfRangeException(nameof(analyzeType), analyzeType, null);
                  }
